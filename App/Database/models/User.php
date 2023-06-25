@@ -2,10 +2,10 @@
 
 namespace App\Database\models;
 
-use App\Database\Contract\Connection;
+use App\Database\Models\Contract\Model;
 use App\Database\Models\Contract\Crud;
 
-class User implements Crud
+class User extends Model implements Crud
 {
     private $id, $first_name, $last_name, $email, $password,
         $phone, $gender, $status, $image, $verification_code, $email_verified_at, $created_at, $updated_at;

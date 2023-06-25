@@ -2,10 +2,10 @@
 
 namespace App\Database\models;
 
-use App\Database\Contract\Connection;
+use App\Database\Models\Contract\Model;
 use App\Database\Models\Contract\Crud;
 
-class Products implements Crud
+class Products extends Model implements Crud
 
 {
     private $id, $en_name, $ar_name, $price, $quantity, $status, $image, $code,
