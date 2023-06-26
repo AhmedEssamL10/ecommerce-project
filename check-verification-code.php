@@ -1,34 +1,34 @@
 <?php
 
+use App\Database\Http\Requests\validation;
 use App\Database\Models\User;
-use App\Http\Requests\Validation;
 
 $title = "Verify Your Account";
-include "layouts/header.php";
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    // validation
-    $validation = new Validation;
-    $validation->setInput('verification_code')->setValue($_POST['verification_code'])
-    ->required()->digits(5)->exists('users','verification_code');
-    if(empty($validation->getErrors())){
-        // no validation error
-        $user = new User;
-        $result = $user->setEmail($_SESSION['email'])->setVerification_code($_POST['verification_code'])
-        ->checkCode();
-        if($result->num_rows == 1){
-            $user->setEmail_verified_at(date('Y-m-d H:i:s'));
-            if($user->makeUserVerified()){
-                // updated
-                $success = "<div class='alert alert-success text-center'> Correct Code , You will be redirected to login page shortly ... </div>";
-                header('refresh:3; url=login.php');
-            }else{
-                $error = "<div class='alert alert-danger text-center'> Something Went Wrong </div>";
-            }
-        }else{
-            $error = "<div class='alert alert-danger text-center'> Wrong Verification Code </div>";
-        }
-    }
-}
+// include "layouts/header.php";
+// if ($_SERVER['REQUEST_METHOD'] == "POST") {
+//     // validation
+//     $validation = new validation;
+//     // $validation->setInput('verification_code')->setValue($_POST['verification_code'])
+//     //     ->required()->digits(5)->exists('users', 'verification_code');
+//     // if (empty($validation->getErrors())) {
+//     //     // no validation error
+//     //     $user = new User;
+//     //     $result = $user->setEmail($_SESSION['email'])->setVerification_code($_POST['verification_code'])
+//     //         ->checkCode();
+//     //     if ($result->num_rows == 1) {
+//     //         $user->setEmail_verified_at(date('Y-m-d H:i:s'));
+//     //         if ($user->makeUserVerified()) {
+//     //             // updated
+//     //             $success = "<div class='alert alert-success text-center'> Correct Code , You will be redirected to login page shortly ... </div>";
+//     //             header('refresh:3; url=login.php');
+//     //         } else {
+//     //             $error = "<div class='alert alert-danger text-center'> Something Went Wrong </div>";
+//     //         }
+//     //     } else {
+//     //         $error = "<div class='alert alert-danger text-center'> Wrong Verification Code </div>";
+//     //     }
+//     // }
+// }
 ?>
 <div class="login-register-area ptb-100">
     <div class="container">
@@ -45,12 +45,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                             <div class="login-form-container">
                                 <div class="login-register-form">
                                     <form action="" method="post">
-                                        <?= $error ?? "" ?>
-                                        <?= $success ?? "" ?>
-                                        <input type="number"  name="verification_code" placeholder="Verification Code">
-                                        <?= isset($validation) ? $validation->getMessage('verification_code') : '' ?>
+
+                                        <input type="number" name="verification_code" placeholder="Verification Code">
+
                                         <div class="button-box">
-                                        <button type="submit"><span>Verify</span></button>
+                                            <button type="submit"><span>Verify</span></button>
                                         </div>
 
                                     </form>
@@ -63,7 +62,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
         </div>
     </div>
 </div>
-<?php 
+<?php
 include "layouts/scripts.php";
 ?>
-

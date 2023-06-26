@@ -15,6 +15,12 @@ class User extends Model implements Crud
     }
     function create()
     {
+        $query = "INSERT INTO users (first_name,last_name,email,password,phone,gender,verification_code)
+        VALUES (?,?,?,?,?,?,?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ssssssi", $this->first_name, $this->last_name, $this->email, $this->password, $this->phone, $this->gender, $this->verification_code);
+        //bind_param(first latter of data type of input , input)
+        return  $stmt->execute(); // return true or false
     }
     function update()
     {

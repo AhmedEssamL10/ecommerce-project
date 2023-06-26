@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\Http\Requests\validation;
+use App\Database\models\User;
 
 $title = "Register";
 include "layouts/header.php";
@@ -19,15 +20,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $validation->setInput('gender')->setValue($_POST['gender'])->required()->in(['m', 'f']);
     if (empty($validation->getErrors())) {
         // no validation error
+        // generate verification code
+        $verification_code = rand(10000, 99999); // generte 5 digit number
+        $user = new User;
+        $user->setFirst_name($_POST['first_name'])->setLast_name($_POST['last_name'])
+            ->setEmail($_POST['email'])->setPassword($_POST['password'])->setPhone($_POST['phone'])
+            ->setGender($_POST['gender'])->setVerification_code($verification_code);
+        if ($user->create()) {
+            // send email
+            header('location:check-verification-code.php');
+            die;
+        } else {
+            echo "something wrong";
+        }
     }
 }
-
-
-
-// generate verification code
-
-// send email
-
 ?>
 <div class="login-register-area ptb-100">
     <div class="container">
@@ -45,21 +52,21 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                 <div class="login-register-form">
                                     <?= $error ?? "" ?>
                                     <form method="post">
-                                        <input type="text" name="first_name" placeholder="First Name" value="<?= $_POST["first_name"] ?>">
+                                        <input type="text" name="first_name" placeholder="First Name" value="<?= $validation->getOldValues('first_name') ?>">
                                         <?php echo $validation->getError("first_name"); ?>
-                                        <input type="text" name="last_name" placeholder="Last Name" value="<?= $_POST["last_name"] ?>">
+                                        <input type="text" name="last_name" placeholder="Last Name" value="<?= $validation->getOldValues('last_name') ?>">
                                         <?php echo $validation->getError("last_name"); ?>
-                                        <input type="email" name="email" placeholder="Email Address" value="<?= $_POST["email"] ?>">
+                                        <input type="email" name="email" placeholder="Email Address" value="<?= $validation->getOldValues('email') ?>">
                                         <?php echo $validation->getError("email"); ?>
-                                        <input type="tel" name="phone" placeholder="Phone" value="<?= $_POST["phone"] ?>">
+                                        <input type="tel" name="phone" placeholder="Phone" value="<?= $validation->getOldValues('phone') ?>">
                                         <?php echo $validation->getError("phone"); ?>
                                         <input type="password" name="password" placeholder="Password">
                                         <?php echo $validation->getError("password"); ?>
                                         <input type="password" name="password_confirmation" placeholder="Password Confirmation">
                                         <?php echo $validation->getError("password_confirmation"); ?>
                                         <select name="gender" class="form-control my-3" id="">
-                                            <option value="m">Male</option>
-                                            <option value="f">Female</option>
+                                            <option <?= $validation->getOldValues('gender') == 'm' ? 'selected' : '' ?> value="m">Male</option>
+                                            <option <?= $validation->getOldValues('gender') == 'f' ? 'selected' : '' ?> value="f">Female</option>
                                         </select>
                                         <?php echo $validation->getError("gender"); ?>
 

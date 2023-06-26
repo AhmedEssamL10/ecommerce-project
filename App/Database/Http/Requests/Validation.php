@@ -114,12 +114,12 @@ class validation
         }
         return $this;
     }
-    public function regex(string $pattern)
+    public function regex(string $pattern, string $massage = "")
     {
         if (!preg_match($pattern, $this->value)) {
             // array_push($this -> errors, "This field is Required");
             // return false;
-            $this->errors[$this->input][__FUNCTION__] = str_replace("_", " ", $this->input) . " invalid";
+            $this->errors[$this->input][__FUNCTION__] = $massage ? $massage : str_replace("_", " ", $this->input) . " invalid";
         }
         return $this;
     }
@@ -131,5 +131,12 @@ class validation
             $this->errors[$this->input][__FUNCTION__] = str_replace("_", " ", $this->input) . " not confirmed";
         }
         return $this;
+    }
+    public function getOldValues(string $input)
+    {
+        if (isset($_POST[$input])) {
+            return $_POST[$input];
+        } else
+            return null;
     }
 }
