@@ -4,7 +4,7 @@ use App\Database\Http\Requests\validation;
 use App\Database\Models\User;
 
 $title = "Verify Your Account";
-// include "layouts/header.php";
+include "layouts/header.php";
 // if ($_SERVER['REQUEST_METHOD'] == "POST") {
 //     // validation
 //     $validation = new validation;
