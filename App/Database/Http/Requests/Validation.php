@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Database\Http\Requests;
+
+use App\Database\Models\Contract\Model;
+
 // this class validate on inputs and return errors if exists
 class validation
 {
@@ -139,4 +142,31 @@ class validation
         } else
             return null;
     }
+    public function unique(string $table, string $col)
+    {
+        $query = "SELECT * FROM {$table} WHERE {$col} = ?";
+        $model = new Model;
+        $stmt = $model->conn->prepare($query);
+        $stmt->bind_Param('s', $this->value);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows >= 1) {
+            $this->errors[$this->input][__FUNCTION__] = "This " . str_replace("_", " ", $this->input) . "  Already exists";
+        }
+        return $this;
+    }
+    public function exists(string $table, string $col)
+    {
+        $query = "SELECT * FROM {$table} WHERE {$col} = ?";
+        $model = new Model;
+        $stmt = $model->conn->prepare($query);
+        $stmt->bind_Param('s', $this->value);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows == 0) {
+            $this->errors[$this->input][__FUNCTION__] = "This " . str_replace("_", " ", $this->input) . "  not exists";
+        }
+        return $this;
+    }
 }
+//rowCount()

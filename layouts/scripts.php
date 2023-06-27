@@ -8,7 +8,7 @@
     <script src="assets/js/owl.carousel.min.js"></script>
     <script src="assets/js/plugins.js"></script>
     <script src="assets/js/main.js"></script>
-</body>
+    </body>
 
-</html>
-<?php ob_end_flush() ?>
+    </html>
+    <?php ob_end_flush() ?>
