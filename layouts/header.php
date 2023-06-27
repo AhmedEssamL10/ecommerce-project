@@ -1,4 +1,5 @@
 <?php
+ob_start(); // output control buffering 
 include "vendor/autoload.php";
 ?>
 <!doctype html>
