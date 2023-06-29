@@ -168,5 +168,11 @@ class validation
         }
         return $this;
     }
+    public function digits(int $input)
+    {
+        if (strlen($this->value) != $input) {
+            $this->errors[$this->input][__FUNCTION__] = "This " . str_replace("_", " ", $this->input) . "  must equal $input digits";
+        } else
+            return $this;
+    }
 }
-//rowCount()

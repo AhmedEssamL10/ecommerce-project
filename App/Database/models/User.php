@@ -2,6 +2,7 @@
 
 namespace App\Database\models;
 
+use App\Database\Http\Requests\validation;
 use App\Database\Models\Contract\Model;
 use App\Database\Models\Contract\Crud;
 
@@ -288,4 +289,38 @@ class User extends Model implements Crud
 
         return $this;
     }
+    // public function checkCode()
+    // {
+    //     $query = "SELECT * from users where verification_code = ? and email = ?";
+    //     $stmt = $this->conn->prepare($query);
+    //     $stmt->bind_param("is", $this->verification_code, $this->email);
+    //     $stmt->execute();
+    //     $result = $stmt->get_result();
+    //     if ($result->num_rows == 1) {
+    //         $this->setEmail_verified_at(date('Y-m-d H:i:s'));
+    //         $query1 = "UPDATE users SET email_verification_at =? Where email = ?";
+    //         $stmt1 = $this->conn->prepare($query1);
+    //         $stmt1->bind_param("ss", date('Y-m-d H:m:s'), $this->email);
+    //         $stmt1->execute();
+    //     } else
+    //         return 0;
+    //     return $this;
+    // }
+    public function checkCode()
+    {
+        $query = "SELECT * FROM users WHERE email = ? AND verification_code = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('si', $this->email, $this->verification_code);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
+    public function makeUserVerified()
+    {
+        $query = "UPDATE users SET email_verification_at = ? WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ss', $this->email_verified_at, $this->email);
+        return $stmt->execute();
+    }
 }
+// checkCode

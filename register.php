@@ -1,7 +1,8 @@
 <?php
 
-use App\Database\Http\Requests\validation;
 use App\Database\models\User;
+use App\Mails\VerificationCode;
+use App\Database\Http\Requests\validation;
 
 $title = "Register";
 include "layouts/header.php";
@@ -22,17 +23,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (empty($validation->getErrors())) {
         // no validation error
         // generate verification code
-        $verification_code = rand(10000, 99999); // generte 5 digit number
+        $verificationCode = rand(10000, 99999);
         $user = new User;
         $user->setFirst_name($_POST['first_name'])->setLast_name($_POST['last_name'])
             ->setEmail($_POST['email'])->setPassword($_POST['password'])->setPhone($_POST['phone'])
-            ->setGender($_POST['gender'])->setVerification_code($verification_code);
+            ->setGender($_POST['gender'])->setVerification_code($verificationCode);
         if ($user->create()) {
             // send email
-            header('location:check-verification-code.php');
-            die;
+            $verificationCodeMail = new VerificationCode;
+            $subject = "Verification Code";
+            $body = "<p>Hello {$_POST['first_name']}</p>
+            <p>Your Verification Code: <b style='color:blue;'>{$verificationCode}</b></p>
+            <p>Thank You.</p>";
+            if ($verificationCodeMail->send($_POST['email'], $subject, $body)) {
+                $_SESSION['email'] = $_POST['email'];
+                header('location:check-verification-code.php');
+                die;
+            } else {
+                $error = "<div class='alert alert-danger text-center'> Please Try Again Later </div>";
+            }
         } else {
-            echo "something wrong";
+            $error = "<div class='alert alert-danger text-center'> Something Went Wrong </div>";
         }
     }
 }

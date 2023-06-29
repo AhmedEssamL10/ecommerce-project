@@ -1,5 +1,6 @@
 <?php
 ob_start(); // output control buffering 
+session_start();
 include "vendor/autoload.php";
 ?>
 <!doctype html>
