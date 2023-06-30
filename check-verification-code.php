@@ -3,10 +3,29 @@
 use App\Database\Http\Requests\validation;
 use App\Database\Models\User;
 
-include "App/Database/Http/Middlewares/NotVerified.php";
 
 $title = "Verify Your Account";
+$pages = ['login', 'register', 'forget'];
+
+if ($_GET) {
+    if (isset($_GET['page'])) {
+        if (!in_array($_GET['page'], $pages)) {
+            $title = "404 Not Found";
+            include "layouts/errors/404.php";
+            die;
+        }
+    } else {
+        $title = "404 Not Found";
+        include "layouts/errors/404.php";
+        die;
+    }
+} else {
+    $title = "404 Not Found";
+    include "layouts/errors/404.php";
+    die;
+}
 include "layouts/header.php";
+include "App/Database/Http/Middlewares/NotVerified.php";
 $validation = new validation;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -19,14 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $result = $user->setEmail($_SESSION['email'])->setVerification_code($_POST['verification_code'])
             ->checkCode();
         if ($result->num_rows == 1) {
-            $user->setEmail_verified_at(date('Y-m-d H:i:s'));
-            if ($user->makeUserVerified()) {
-                // updated
-                $success = "<div class='alert alert-success text-center'> Correct Code , You will be redirected to login page shortly ... </div>";
-                unset($_SESSION['email']);
-                header('refresh:3; url=login.php');
-            } else {
-                $error = "<div class='alert alert-danger text-center'> Something Went Wrong </div>";
+            if ($_GET['page'] == 'login' || $_GET['page'] == "register") { // page send requist login or register
+                $user->setEmail_verified_at(date('Y-m-d H:i:s'));
+                if ($user->makeUserVerified()) {
+                    unset($_SESSION['email']);
+                    // updated
+                    if ($_GET['page'] == 'register') {
+                        $success = "<div class='alert alert-success text-center'> Correct Code , You will be redirected to login page shortly ... </div>";
+                        header('refresh:3; url=login.php');
+                    } else {
+                        $_SESSION['user'] = $result->fetch_object();
+                        header('location:index.php');
+                        die;
+                    }
+                } else {
+                    $error = "<div class='alert alert-danger text-center'> Something Went Wrong </div>";
+                }
+            } elseif ($_GET['page'] == 'forget') {
+                header('location:set-new-password.php');
+                die;
             }
         } else {
             $error = "<div class='alert alert-danger text-center'> Wrong Verification Code </div>";

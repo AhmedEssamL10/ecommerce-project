@@ -330,5 +330,19 @@ class User extends Model implements Crud
         $stmt->execute();
         return $stmt->get_result();
     }
+    public function updateCode()
+    {
+        $query = "UPDATE users SET verification_code = ? WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ss', $this->verification_code, $this->email);
+        return $stmt->execute();
+    }
+    public function updatePassword()
+    {
+        $query = "UPDATE users SET password = ? WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ss', $this->password, $this->email);
+        return $stmt->execute();
+    }
 }
 // checkCode

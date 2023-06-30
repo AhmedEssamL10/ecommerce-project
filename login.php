@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 }
             } else {
                 $_SESSION['email'] = $_POST['email'];
-                header('location:check-verification-code.php');
+                header('location:check-verification-code.php?page=login');
             }
         } else {
             $error = '<div class="alert alert-warning text-center"><strong>Wrong Email or password';
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                             <div class="login-toggle-btn">
                                                 <input type="checkbox">
                                                 <label>Remember me</label>
-                                                <a href="#">Forgot Password?</a>
+                                                <a href="forget-password.php">Forgot Password?</a>
                                             </div>
                                             <button type="submit"><span>Login</span></button>
                                         </div>
