@@ -1,4 +1,4 @@
-<?php 
+<?php
 $title = "My Account";
 include "layouts/header.php";
 include "layouts/navbar.php";
@@ -13,8 +13,7 @@ include "layouts/breadcrumb.php";
                     <div id="faq" class="panel-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq"
-                                        href="#my-account-1">Edit your account information </a></h5>
+                                <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-1">Edit your account information </a></h5>
                             </div>
                             <div id="my-account-1" class="panel-collapse collapse show">
                                 <div class="panel-body">
@@ -69,8 +68,7 @@ include "layouts/breadcrumb.php";
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq"
-                                        href="#my-account-2">Change your password </a></h5>
+                                <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-2">Change your password </a></h5>
                             </div>
                             <div id="my-account-2" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -107,8 +105,7 @@ include "layouts/breadcrumb.php";
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq"
-                                        href="#my-account-3">Modify your address book entries </a></h5>
+                                <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-3">Modify your address book entries </a></h5>
                             </div>
                             <div id="my-account-3" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -118,8 +115,7 @@ include "layouts/breadcrumb.php";
                                         </div>
                                         <div class="entries-wrapper">
                                             <div class="row">
-                                                <div
-                                                    class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                                     <div class="entries-info text-center">
                                                         <p>Farhana hayder (shuvo) </p>
                                                         <p>hastech </p>
@@ -129,8 +125,7 @@ include "layouts/breadcrumb.php";
                                                         <p>Bangladesh </p>
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                                     <div class="entries-edit-delete text-center">
                                                         <a class="edit" href="#">Edit</a>
                                                         <a href="#">Delete</a>
@@ -163,7 +158,7 @@ include "layouts/breadcrumb.php";
     </div>
 </div>
 <!-- my account end -->
-<?php 
+<?php
 include "layouts/footer.php";
 include "layouts/scripts.php";
 ?>

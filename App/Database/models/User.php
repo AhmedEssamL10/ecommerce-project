@@ -322,5 +322,13 @@ class User extends Model implements Crud
         $stmt->bind_param('ss', $this->email_verified_at, $this->email);
         return $stmt->execute();
     }
+    public function checkLogin()
+    {
+        $query = "SELECT * FROM users WHERE email = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('s', $this->email);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
 // checkCode
