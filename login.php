@@ -25,12 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             // email verified
             if (!is_null($result->email_verification_at)) {
                 if ($result->status == 1) {
-                    // $_SESSION['email'] = $_POST['email'];
-                    // $_SESSION['image'] = $result->image;
-                    // $_SESSION['email'] = $result->phone;
-                    // $_SESSION['email'] = $result->first_name;
-                    // $_SESSION['email'] = $result->last_name;
-                    // $_SESSION['email'] = $result->id;
+                    if (isset($_POST['remember_me'])) {
+                        setcookie('user', $_POST['email'], time() + (365 * 86400), '/'); // create cookie
+                    }
                     $_SESSION['user'] = $result;
                     header("location:index.php");
                 } else {
@@ -68,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                         <?php echo $validation->getError("password"); ?>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
-                                                <input type="checkbox">
+                                                <input type="checkbox" name="remember_me">
                                                 <label>Remember me</label>
                                                 <a href="forget-password.php">Forgot Password?</a>
                                             </div>

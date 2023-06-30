@@ -1,7 +1,16 @@
 <?php
+
+use App\Database\models\User;
+
 ob_start(); // output control buffering 
 session_start();
 include "vendor/autoload.php";
+if (isset($_COOKIE['user'])) {
+    $user = new User;
+    $loggedInUser = $user->setEmail($_COOKIE['user'])
+        ->checkLogin()->fetch_object();
+    $_SESSION['user'] = $loggedInUser;
+}
 ?>
 <!doctype html>
 <html class="no-js" lang="zxx">
