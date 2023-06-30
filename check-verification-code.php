@@ -3,6 +3,8 @@
 use App\Database\Http\Requests\validation;
 use App\Database\Models\User;
 
+include "App/Database/Http/Middlewares/NotVerified.php";
+
 $title = "Verify Your Account";
 include "layouts/header.php";
 $validation = new validation;
@@ -21,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             if ($user->makeUserVerified()) {
                 // updated
                 $success = "<div class='alert alert-success text-center'> Correct Code , You will be redirected to login page shortly ... </div>";
+                unset($_SESSION['email']);
                 header('refresh:3; url=login.php');
             } else {
                 $error = "<div class='alert alert-danger text-center'> Something Went Wrong </div>";

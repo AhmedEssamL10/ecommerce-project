@@ -3,6 +3,7 @@ $title = "My Account";
 include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
+include "app/Database/Http/Middlewares/Auth.php";
 ?>
 <!-- my account start -->
 <div class="checkout-area pb-80 pt-100">

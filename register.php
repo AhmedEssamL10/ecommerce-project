@@ -8,6 +8,7 @@ $title = "Register";
 include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
+include "app/Database/Http/Middlewares/Guest.php";
 $validation = new validation;
 // var_dump($validation->unique());
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
