@@ -73,28 +73,27 @@
                         <?php
                         if (isset($_SESSION['user'])) {
                         ?>
-                        <div class="header-currency">
-                            <span class="digit"><?= $_SESSION['user']->first_name ?> <i
-                                    class="ti-angle-down"></i></span>
-                            <div class="dollar-submenu">
-                                <ul>
-                                    <li><a href="profile.php">Profile</a></li>
-                                    <li><a href="logout.php">Logout</a></li>
-                                </ul>
+                            <div class="header-currency">
+                                <span class="digit"><?= $_SESSION['user']->first_name ?> <i class="ti-angle-down"></i></span>
+                                <div class="dollar-submenu">
+                                    <ul>
+                                        <li><a href="my-account.php">Profile</a></li>
+                                        <li><a href="logout.php">Logout</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         <?php } else {
                         ?>
-                        <div class="header-currency">
-                            <span class="digit">Welcome <i class="ti-angle-down"></i></span>
-                            <div class="dollar-submenu">
-                                <ul>
-                                    <li><a href="login.php">Login</a></li>
-                                    <li><a href="register.php">Register</a></li>
+                            <div class="header-currency">
+                                <span class="digit">Welcome <i class="ti-angle-down"></i></span>
+                                <div class="dollar-submenu">
+                                    <ul>
+                                        <li><a href="login.php">Login</a></li>
+                                        <li><a href="register.php">Register</a></li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         <?php } ?>
                         <div class="header-cart">
                             <a href="#">
