@@ -10,7 +10,8 @@ class User extends Model implements Crud
 {
     private $id, $first_name, $last_name, $email, $password,
         $phone, $gender, $status, $image, $verification_code, $email_verified_at, $created_at, $updated_at;
-
+    private string $input;
+    private string $value;
     function read()
     {
     }
@@ -25,6 +26,11 @@ class User extends Model implements Crud
     }
     function update()
     {
+        $query = "UPDATE users SET $this->input = ? WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ss', $this->value, $this->email);
+        $stmt->execute();
+        return $this;
     }
     function delete()
     {
@@ -350,6 +356,46 @@ class User extends Model implements Crud
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param('ss', $this->image, $this->email);
         return $stmt->execute();
+    }
+
+    /**
+     * Get the value of input
+     */
+    public function getInput()
+    {
+        return $this->input;
+    }
+
+    /**
+     * Set the value of input
+     *
+     * @return  self
+     */
+    public function setInput($input)
+    {
+        $this->input = $input;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of value
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set the value of value
+     *
+     * @return  self
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
     }
 }
 // updateImage
