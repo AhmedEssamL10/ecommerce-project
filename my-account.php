@@ -10,6 +10,7 @@ include "App/database/Http/Middlewares/Auth.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
 $validation = new validation;
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['upload-image'])) {
         if ($_FILES['image']['error'] == 0) {
@@ -65,78 +66,79 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
                             <div id="my-account-1" class="panel-collapse collapse <?= isset($_POST['upload-image']) ? 'show' : '' ?>">
                                 <div class="panel-body">
-                                    <form action="" method="post">
-                                        <div class="billing-information-wrapper">
-                                            <div class="account-info-wrapper">
-                                                <h4>My Account Information</h4>
-                                                <h5>Your Personal Details</h5>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12 my-5">
-                                                    <div class="row">
-                                                        <div class="col-4 offset-4 text-center">
-                                                            <?php
-                                                            if ($_SESSION['user']->image == 'default.jpg') {
-                                                                if ($_SESSION['user']->gender == 'm')
-                                                                    $image = 'male.jpg';
-                                                                else
-                                                                    $image = 'female.jpg';
-                                                            } else {
-                                                                $image = $_SESSION['user']->image;
-                                                            }
-                                                            ?>
-                                                            <label for="file">
-                                                                <img src="assets/img/users/<?= $image ?>" id="image" class="w-100 rounded-circle" style="cursor:pointer;" alt="">
-                                                            </label>
-                                                            <form action="" method="post" enctype="multipart/form-data">
-                                                                <input type="file" name="image" class="d-none" id="file" onchange="loadFile(event)">
-                                                                <div class="billing-btn">
-                                                                    <button type="submit" class="d-none" name="upload-image" id="upload-image">Upload</button>
-                                                                </div>
-                                                            </form>
-                                                            <?= isset($imageService) && $imageService->getError('size') ?>
-                                                            <?= isset($imageService) && $imageService->getError('extension') ?>
-                                                            <?= $successfullUpload ?? "" ?>
-                                                            <?= $failedUpload ?? "" ?>
-                                                        </div>
 
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="billing-info">
-                                                        <label>First Name</label>
-                                                        <input type="text" name="first_name" value="<?= $_SESSION['user']->first_name ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="billing-info">
-                                                        <label>Last Name</label>
-                                                        <input type="text" name="last_name" value="<?= $_SESSION['user']->last_name ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-6">
-                                                    <div class="billing-info">
-                                                        <label for="gender">Gender</label>
-                                                        <select name="gender" id="gender">
-                                                            <option <?= $_SESSION['user']->gender == 'm' ? 'selected' : '' ?> value="m">Male</option>
-                                                            <option <?= $_SESSION['user']->gender == 'f' ? 'selected' : '' ?> value="f">Female</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="billing-back-btn">
-                                                <div class="billing-back">
-                                                    <a href="#"><i class="ion-arrow-up-c"></i> back</a>
-                                                </div>
-                                                <div class="billing-btn">
-                                                    <button type="submit" name="update-info">Continue</button>
-                                                </div>
-                                            </div>
-
+                                    <div class="billing-information-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>My Account Information</h4>
+                                            <h5>Your Personal Details</h5>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-12 my-5">
+                                                <div class="row">
+                                                    <div class="col-4 offset-4 text-center">
+                                                        <?php
+                                                        if ($_SESSION['user']->image == 'default.jpg') {
+                                                            if ($_SESSION['user']->gender == 'm')
+                                                                $image = 'male.jpg';
+
+                                                            else
+                                                                $image = 'female.jpg';
+                                                        } else {
+                                                            $image = $_SESSION['user']->image;
+                                                        }
+                                                        ?>
+                                                        <label for="file">
+                                                            <img src="assets/img/users/<?= $image ?>" id="image" class="w-100 rounded-circle" style="cursor:pointer;" alt="">
+                                                        </label>
+                                                        <form action="" method="post" enctype="multipart/form-data">
+                                                            <input type="file" name="image" class="d-none" id="file" onchange="loadFile(event)">
+                                                            <div class="billing-btn">
+                                                                <button type="submit" class="d-none" name="upload-image" id="upload-image">Upload</button>
+                                                            </div>
+                                                        </form>
+                                                        <?= isset($imageService) && $imageService->getError('size') ?>
+                                                        <?= isset($imageService) && $imageService->getError('extension') ?>
+                                                        <?= $successfullUpload ?? "" ?>
+                                                        <?= $failedUpload ?? "" ?>
+                                                    </div>
+                                                    <form action="" method="post">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="billing-info">
+                                                    <label>First Name</label>
+                                                    <input type="text" name="first_name" value="<?= $_SESSION['user']->first_name ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="billing-info">
+                                                    <label>Last Name</label>
+                                                    <input type="text" name="last_name" value="<?= $_SESSION['user']->last_name ?>">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="billing-info">
+                                                    <label for="gender">Gender</label>
+                                                    <select name="gender" id="gender">
+                                                        <option <?= $_SESSION['user']->gender == 'm' ? 'selected' : '' ?> value="m">Male</option>
+                                                        <option <?= $_SESSION['user']->gender == 'f' ? 'selected' : '' ?> value="f">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="billing-back-btn">
+                                            <div class="billing-back">
+                                                <a href="#"><i class="ion-arrow-up-c"></i> back</a>
+                                            </div>
+                                            <div class="billing-btn">
+                                                <button type="submit" name="update-info">Continue</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     </form>
                                 </div>
                             </div>

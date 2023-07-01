@@ -2,17 +2,21 @@
 
 namespace App\Database\Models;
 
-use App\Database\Contract\Connection;
 use App\Database\Models\Contract\Crud;
+use App\Database\Models\Contract\Model;
 
-class Category extends Connection implements Crud
+class Category extends Model implements Crud
 {
     private $id, $name_en, $name_ar, $status, $image, $created_at, $updated_at;
+    private const ACTIVE = 1;
+    private const NOT_ACTIVE = 0;
     public function create()
     {
     }
     public function read()
     {
+        $query = "SELECT * FROM catigories WHERE status = " . self::ACTIVE;
+        return $this->conn->query($query);
     }
     public function update()
     {
