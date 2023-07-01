@@ -344,5 +344,12 @@ class User extends Model implements Crud
         $stmt->bind_param('ss', $this->password, $this->email);
         return $stmt->execute();
     }
+    public function updateImage()
+    {
+        $query = "UPDATE users SET image = ? WHERE email = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ss', $this->image, $this->email);
+        return $stmt->execute();
+    }
 }
-// checkCode
+// updateImage

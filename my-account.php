@@ -1,9 +1,36 @@
 <?php
-$title = "My Account";
+
+use App\Services\Media;
+use App\Database\Models\User;
+
+$title = "Profile";
 include "layouts/header.php";
+include "App/database/Http/Middlewares/Auth.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
-include "app/Database/Http/Middlewares/Auth.php";
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['upload-image'])) {
+        if ($_FILES['image']['error'] == 0) {
+            $imageService = new Media;
+            $imageService->setFile($_FILES['image'])
+                ->size(1024 * 1024)->extension(['png', 'jpg', 'jpeg']);
+            if (empty($imageService->getErrors())) {
+                $imageService->upload('assets/img/users/');
+                $user = new User;
+                $user->setEmail($_SESSION['user']->email)->setImage($imageService->getFileName());
+                if ($user->updateImage()) {
+                    if ($_SESSION['user']->image != 'default.jpg') {
+                        $imageService->delete('assets/img/users/' . $_SESSION['user']->image);
+                    }
+                    $_SESSION['user']->image = $imageService->getFileName();
+                    $successfullUpload = "<div class='alert alert-success text-center'> Profile Picture Uploaded Successfully </div>";
+                } else {
+                    $failedUpload = "<div class='alert alert-danger text-center'> Upload Failed </div>";
+                }
+            }
+        }
+    }
+}
 ?>
 <!-- my account start -->
 <div class="checkout-area pb-80 pt-100">
@@ -16,7 +43,7 @@ include "app/Database/Http/Middlewares/Auth.php";
                             <div class="panel-heading">
                                 <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-1">Edit your account information </a></h5>
                             </div>
-                            <div id="my-account-1" class="panel-collapse collapse show">
+                            <div id="my-account-1" class="panel-collapse collapse <?= isset($_POST['upload-image']) ? 'show' : '' ?>">
                                 <div class="panel-body">
                                     <div class="billing-information-wrapper">
                                         <div class="account-info-wrapper">
@@ -24,34 +51,57 @@ include "app/Database/Http/Middlewares/Auth.php";
                                             <h5>Your Personal Details</h5>
                                         </div>
                                         <div class="row">
+                                            <div class="col-12 my-5">
+                                                <div class="row">
+                                                    <div class="col-4 offset-4 text-center">
+                                                        <?php
+                                                        if ($_SESSION['user']->image == 'default.jpg') {
+                                                            if ($_SESSION['user']->gender == 'm')
+                                                                $image = 'male.jpg';
+                                                            else
+                                                                $image = 'female.jpg';
+                                                        } else {
+                                                            $image = $_SESSION['user']->image;
+                                                        }
+                                                        ?>
+                                                        <label for="file">
+                                                            <img src="assets/img/users/<?= $image ?>" id="image" class="w-100 rounded-circle" style="cursor:pointer;" alt="">
+                                                        </label>
+                                                        <form action="" method="post" enctype="multipart/form-data">
+                                                            <input type="file" name="image" class="d-none" id="file" onchange="loadFile(event)">
+                                                            <div class="billing-btn">
+                                                                <button type="submit" class="d-none" name="upload-image" id="upload-image">Upload</button>
+                                                            </div>
+                                                        </form>
+                                                        <?= isset($imageService) && $imageService->getError('size') ?>
+                                                        <?= isset($imageService) && $imageService->getError('extension') ?>
+                                                        <?= $successfullUpload ?? "" ?>
+                                                        <?= $failedUpload ?? "" ?>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>First Name</label>
-                                                    <input type="text">
+                                                    <input type="text" name="first_name" value="<?= $_SESSION['user']->first_name ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Last Name</label>
-                                                    <input type="text">
+                                                    <input type="text" name="last_name" value="<?= $_SESSION['user']->last_name ?>">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="billing-info">
-                                                    <label>Email Address</label>
-                                                    <input type="email">
-                                                </div>
-                                            </div>
+
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
-                                                    <label>Telephone</label>
-                                                    <input type="text">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6">
-                                                <div class="billing-info">
-                                                    <label>Fax</label>
-                                                    <input type="text">
+                                                    <label for="gender">Gender</label>
+                                                    <select name="gender" id="gender">
+                                                        <option <?= $_SESSION['user']->gender == 'm' ? 'selected' : '' ?> value="m">Male</option>
+                                                        <option <?= $_SESSION['user']->gender == 'f' ? 'selected' : '' ?> value="f">Female</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,6 +208,16 @@ include "app/Database/Http/Middlewares/Auth.php";
         </div>
     </div>
 </div>
+<script>
+    var loadFile = function(event) {
+        var output = document.getElementById('image');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+            document.getElementById('upload-image').classList.remove('d-none');
+        }
+    };
+</script>
 <!-- my account end -->
 <?php
 include "layouts/footer.php";
