@@ -10,8 +10,12 @@ class Products extends Model implements Crud
 {
     private $id, $en_name, $ar_name, $price, $quantity, $status, $image, $code,
         $details_ar, $detials_en, $brand_id, $subcategory_id, $created_at, $updated_at;
+    private const ACTIVE = 1;
+    private const NOT_ACTIVE = 0;
     function read()
     {
+        $query = "SELECT * FROM products WHERE status =  " . self::ACTIVE;
+        return $this->conn->query($query);
     }
     function create()
     {
