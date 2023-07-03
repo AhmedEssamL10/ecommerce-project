@@ -167,4 +167,12 @@ class Brands extends Model implements Crud
 
         return $this;
     }
+    // function getProductByName()
+    // {
+    //     $query = "SELECT * FROM products WHERE status =  " . self::ACTIVE . "AND en_name = ?";
+    //     $stmt = $this->conn->prepare($query);
+    //     $stmt->bind_param('s', $this->en_name);
+    //     $stmt->execute();
+    //     return $stmt->get_result();
+    // }
 }

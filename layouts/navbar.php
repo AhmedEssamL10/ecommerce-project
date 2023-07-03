@@ -40,13 +40,15 @@ $subresult = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
                                             ?>
                                                 <li>
                                                     <ul>
-                                                        <li class="mega-menu-title"><?= $value['en_name'] ?></li>
+                                                        <li font-> <a class="font-weight-bold" href="shop.php?category=<?= $value['id'] ?>">
+                                                                <?= $value['en_name'] ?></a></li>
 
                                                         <?php
                                                         foreach ($subresult as $subvalue) {
                                                             if ($subvalue['catigories_id'] == $value['id']) {
                                                         ?>
-                                                                <li><a href="shop.php"><?= $subvalue['en_name'] ?></a></li>
+                                                                <li><a href="shop.php?subcategory=<?= $subvalue['id'] ?>"><?= $subvalue['en_name'] ?></a>
+                                                                </li>
 
                                                         <?php
                                                             }
