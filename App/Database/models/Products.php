@@ -310,7 +310,7 @@ class Products extends Model implements Crud
     {
         $query = "SELECT * FROM products WHERE status =  " . self::ACTIVE . " AND $input = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('s', $value);
+        $stmt->bind_param('i', $value);
         $stmt->execute();
         return $stmt->get_result();
     }

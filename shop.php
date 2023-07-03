@@ -16,18 +16,33 @@ $validation = new validation;
 // $brands = new Brands;
 if ($_GET) {
     if (isset($_GET['brand'])) {
-        $result = $products->getProductByName("brands_id", $_GET['brand'])->fetch_all(MYSQLI_ASSOC);
-    } elseif (isset($_GET['category'])) {
+        if (is_numeric($_GET['brand'])) {
+            $result = $products->getProductByName("brands_id", $_GET['brand']);
+            if ($result->num_rows > 0) {
+                $result->fetch_all(MYSQLI_ASSOC);
+            } else {
+                echo "<h1>No Product found</h1>";
+            }
+        } else {
+            $title = "404 Not Found";
+            include "layouts/errors/404.php";
+        }
     } elseif (isset($_GET['subcategory'])) {
-        $result = $products->getProductByName("subcatigories_id", $_GET['subcategory'])->fetch_all(MYSQLI_ASSOC);
-    } else {
-        $title = "404 Not Found";
-        include "layouts/errors/404.php";
+        if (is_numeric($_GET['subcategory'])) {
+            $result = $products->getProductByName("subcatigories_id", $_GET['subcategory']);
+            if ($result->num_rows > 0) {
+                $result->fetch_all(MYSQLI_ASSOC);
+            } else {
+                echo "<h1>No Product found</h1>";
+            }
+        } else {
+            $title = "404 Not Found";
+            include "layouts/errors/404.php";
+        }
     }
 } else {
     $result = $products->read()->fetch_all(MYSQLI_ASSOC);
 }
-
 
 $category = new Category;
 $subcatagory = new SubCategory;
