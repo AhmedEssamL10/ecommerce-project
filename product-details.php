@@ -2,7 +2,7 @@
 $title = "Product details";
 include "layouts/header.php";
 include "layouts/navbar.php";
-include "layouts/breadcrumb.php";
+// include "layouts/breadcrumb.php";
 
 use App\Database\models\Products;
 
@@ -24,7 +24,8 @@ if ($_GET) {
         }
     }
 } else {
-    $result = $products->read()->fetch_all(MYSQLI_ASSOC);
+    $title = "404 Not Found";
+    include "layouts/errors/404.php";
 }
 ?>
 <!-- Product Deatils Area Start -->
@@ -64,9 +65,32 @@ if ($_GET) {
                         </div>
                     </div>
                     <span>$<?= $value['price'] ?></span>
+                    <?php
+                        if ($value['quantity'] > 5) {
+                        ?>
                     <div class="in-stock">
                         <p>Available: <span>In stock</span></p>
                     </div>
+                    <?php
+                        } elseif ($value['quantity'] == 0) {
+                        ?>
+                    <div class="in-stock">
+                        <p>Available: <span style="color:red">Out of stock</span></p>
+                    </div>
+                    <?php
+                        } elseif ($value['quantity'] <= 5 && $value['quantity'] >= 1) {
+                        ?>
+                    <div class="in-stock">
+                        <p>Available: <span style="color:darkorange">In stock </span></p>
+                    </div>
+                    <div class="in-stock">
+                        <p>Quantity: <span style="color:darkorange"> <?= $value['quantity'] ?> </span></p>
+                    </div>
+
+                    <?php
+                        }
+                        ?>
+
                     <div class="quality-add-to-cart">
                         <div class="quality">
                             <label>Qty:</label>
