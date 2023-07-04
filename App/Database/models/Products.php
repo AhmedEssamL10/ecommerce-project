@@ -308,7 +308,7 @@ class Products extends Model implements Crud
     }
     function getProductByName(string $input, int $value)
     {
-        $query = "SELECT * FROM products WHERE status =  " . self::ACTIVE . " AND $input = ?";
+        $query = "SELECT * FROM products WHERE status =  " . self::ACTIVE . " AND $input = ? ";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param('i', $value);
         $stmt->execute();

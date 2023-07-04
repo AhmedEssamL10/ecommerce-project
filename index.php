@@ -48,45 +48,44 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                 # code...
 
             ?>
-            <div class="col-3">
+                <div class="col-3">
 
-                <div class="product-img">
-                    <a href="shop.php?brand=<?= $value['id'] ?>">
+                    <div class="product-img">
+                        <a href="shop.php?brand=<?= $value['id'] ?>">
 
-                        <img alt="" src="assets/img/brand-logo/<?= $value['image'] ?>">
-                    </a>
+                            <img alt="" src="assets/img/brand-logo/<?= $value['image'] ?>">
+                        </a>
 
-                    <div class="product-action">
-                        <a class="action-wishlist" href="#" title="Wishlist">
-                            <i class="ion-android-favorite-outline"></i>
-                        </a>
-                        <a class="action-cart" href="#" title="Add To Cart">
-                            <i class="ion-ios-shuffle-strong"></i>
-                        </a>
-                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                            title="Quick View">
-                            <i class="ion-ios-search-strong"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="product-content text-left">
-                    <div class="product-hover-style">
-                        <div class="product-title">
-                            <h4>
-                                <a href="product-details.php"><?= $value['en_name'] ?></a>
-                            </h4>
-                        </div>
-                        <div class="cart-hover">
-                            <h4><a href="product-details.php">+ Add to cart</a></h4>
+                        <div class="product-action">
+                            <a class="action-wishlist" href="#" title="Wishlist">
+                                <i class="ion-android-favorite-outline"></i>
+                            </a>
+                            <a class="action-cart" href="#" title="Add To Cart">
+                                <i class="ion-ios-shuffle-strong"></i>
+                            </a>
+                            <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                <i class="ion-ios-search-strong"></i>
+                            </a>
                         </div>
                     </div>
-                    <div class="product-price-wrapper">
-                        <!-- <span>$100.00 -</span>
+                    <div class="product-content text-left">
+                        <div class="product-hover-style">
+                            <div class="product-title">
+                                <h4>
+                                    <a href="product-details.php"><?= $value['en_name'] ?></a>
+                                </h4>
+                            </div>
+                            <div class="cart-hover">
+                                <h4><a href="product-details.php">+ Add to cart</a></h4>
+                            </div>
+                        </div>
+                        <div class="product-price-wrapper">
+                            <!-- <span>$100.00 -</span>
                         <span class="product-price-old">$130.00 </span> -->
+                        </div>
                     </div>
-                </div>
 
-            </div>
+                </div>
             <?php } ?>
         </div>
     </div>
@@ -150,8 +149,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -186,8 +184,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -224,8 +221,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -259,8 +255,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -296,8 +291,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -332,8 +326,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -370,8 +363,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -405,8 +397,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -443,8 +434,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -479,8 +469,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                                     <a class="action-cart" href="#" title="Add To Cart">
                                         <i class="ion-ios-shuffle-strong"></i>
                                     </a>
-                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal"
-                                        title="Quick View">
+                                    <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
                                         <i class="ion-ios-search-strong"></i>
                                     </a>
                                 </div>
@@ -619,19 +608,13 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
             <div class="col-lg-6 col-md-10 col-md-auto">
                 <div class="footer-newsletter">
                     <div id="mc_embed_signup" class="subscribe-form">
-                        <form
-                            action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef"
-                            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
-                            class="validate" target="_blank" novalidate>
+                        <form action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                             <div id="mc_embed_signup_scroll" class="mc-form">
-                                <input type="email" value="" name="EMAIL" class="email"
-                                    placeholder="Your Email Address*" required>
+                                <input type="email" value="" name="EMAIL" class="email" placeholder="Your Email Address*" required>
                                 <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                <div class="mc-news" aria-hidden="true"><input type="text"
-                                        name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
+                                <div class="mc-news" aria-hidden="true"><input type="text" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef" tabindex="-1" value=""></div>
                                 <div class="submit-button">
-                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe"
-                                        class="button">
+                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
                                 </div>
                             </div>
                         </form>
@@ -648,8 +631,7 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">x</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -673,14 +655,10 @@ $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
                         <!-- Thumbnail Image End -->
                         <div class="product-thumbnail">
                             <div class="thumb-menu owl-carousel nav nav-style" role="tablist">
-                                <a class="active" data-toggle="tab" href="#pro-1"><img
-                                        src="assets/img/product-details/product-detalis-s1.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-2"><img
-                                        src="assets/img/product-details/product-detalis-s2.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-3"><img
-                                        src="assets/img/product-details/product-detalis-s3.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-4"><img
-                                        src="assets/img/product-details/product-detalis-s4.jpg" alt=""></a>
+                                <a class="active" data-toggle="tab" href="#pro-1"><img src="assets/img/product-details/product-detalis-s1.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-2"><img src="assets/img/product-details/product-detalis-s2.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-3"><img src="assets/img/product-details/product-detalis-s3.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-4"><img src="assets/img/product-details/product-detalis-s4.jpg" alt=""></a>
                             </div>
                         </div>
                         <!-- Thumbnail image end -->
