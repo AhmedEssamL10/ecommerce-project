@@ -314,4 +314,10 @@ class Products extends Model implements Crud
         $stmt->execute();
         return $stmt->get_result();
     }
+    function newProducts()
+    {
+        $query = "SELECT * FROM products   WHERE status =  " . self::ACTIVE . " ORDER BY created_at DESC LIMIT 4";
+        return $this->conn->query($query);
+    }
 }
+// SELECT * from products ORDER BY created_at DESC LIMIT 4

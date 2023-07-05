@@ -5,12 +5,17 @@ include "layouts/navbar.php";
 // include "layouts/breadcrumb.php";
 
 use App\Database\models\Products;
+use App\Database\Models\Review;
 
 $products = new Products;
+$review = new Review;
 if ($_GET) {
     if (isset($_GET['product'])) {
         if (is_numeric($_GET['product'])) {
             $result = $products->getProductByName("id", $_GET['product']);
+            $reviewResult = $review->setProduct_id($_GET['product'])->read()->fetch_all(MYSQLI_ASSOC);
+            $numOfRates = $review->setProduct_id($_GET['product'])->Rates()->fetch_all(MYSQLI_ASSOC);
+            $nameRates = $review->setProduct_id($_GET['product'])->getNameRate()->fetch_all(MYSQLI_ASSOC);
             if ($result->num_rows > 0) {
                 $result->fetch_all(MYSQLI_ASSOC);
             } else {
@@ -23,6 +28,7 @@ if ($_GET) {
             include "layouts/errors/404.php";
         }
     }
+    // var_dump($reviewResult);
 } else {
     $title = "404 Not Found";
     include "layouts/errors/404.php";
@@ -51,15 +57,29 @@ if ($_GET) {
                     <h4><?= $value['en_name'] ?></h4>
                     <div class="rating-review">
                         <div class="pro-dec-rating">
+                            <?php
+                                for ($i = 0; $i < $numOfRates[0]['avg_Rates']; $i++) {
+                                    # code...
+
+                                ?>
                             <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline theme-star"></i>
-                            <i class="ion-android-star-outline theme-star"></i>
+                            <?php
+                                }
+                                ?>
+                            <?php
+                                for ($i = 0; $i < 5 - $numOfRates[0]['avg_Rates']; $i++) {
+                                    # code...
+
+                                ?>
                             <i class="ion-android-star-outline"></i>
+                            <?php
+                                }
+                                ?>
+
                         </div>
                         <div class="pro-dec-review">
                             <ul>
-                                <li>32 Reviews </li>
+                                <li><?= $numOfRates[0]['num_Rates'] ?> Reviews </li>
                                 <li> Add Your Reviews</li>
                             </ul>
                         </div>
@@ -123,9 +143,10 @@ if ($_GET) {
             </div>
             <div class="tab-content description-review-bottom">
                 <?php
+
                 foreach ($result as $value) {
                     # code...
-
+                    $i = 0;
                 ?>
                 <div id="des-details1" class="tab-pane active">
                     <div class="product-description-wrapper">
@@ -135,52 +156,58 @@ if ($_GET) {
                     </div>
                 </div>
 
+
                 <div id="des-details3" class="tab-pane">
                     <div class="rattings-wrapper">
+                        <?php
+                            foreach ($reviewResult as $value) {
+                                # code...
+
+                            ?>
                         <div class="sin-rattings">
                             <div class="star-author-all">
-                                <div class="ratting-star f-left">
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <span>(5)</span>
+                                <div class="pro-dec-rating">
+                                    <?php
+                                            for ($i = 0; $i < $value['rate']; $i++) {
+                                                # code...
+
+                                            ?>
+                                    <i class="ion-android-star-outline theme-star"></i>
+                                    <?php
+                                            }
+                                            ?>
+                                    <?php
+                                            for ($i = 0; $i < 5 - $value['rate']; $i++) {
+                                                # code...
+
+                                            ?>
+                                    <i class="ion-android-star-outline"></i>
+                                    <?php
+                                            }
+                                            ?>
+                                    <span> (<?= $value['rate']  ?>)</span>
                                 </div>
                                 <div class="ratting-author f-right">
-                                    <h3>Potanu Leos</h3>
-                                    <span>12:24</span>
-                                    <span>9 March 2018</span>
+                                    <?php
+
+                                            if ($i <= $numOfRates[0]['num_Rates']) {
+
+                                            ?>
+                                    <h3><?= $nameRates[$i - 1]['full_name'] ?></h3>
+                                    <?php
+
+                                            }
+
+
+                                            ?>
+                                    <span><?= $value['created_at'] ?></span>
                                 </div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor
-                                sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
+                            <p><?= $value['comment'] ?></p>
                         </div>
-                        <div class="sin-rattings">
-                            <div class="star-author-all">
-                                <div class="ratting-star f-left">
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <i class="ion-star theme-color"></i>
-                                    <span>(5)</span>
-                                </div>
-                                <div class="ratting-author f-right">
-                                    <h3>Kahipo Khila</h3>
-                                    <span>12:24</span>
-                                    <span>9 March 2018</span>
-                                </div>
-                            </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Utenim ad minim veniam, quis nost rud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor
-                                sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Utenim ad minim veniam, quis nost.</p>
-                        </div>
+                        <?php
+                            }
+                            ?>
                     </div>
                     <div class="ratting-form-wrapper">
                         <h3>Add your Comments :</h3>
@@ -219,6 +246,7 @@ if ($_GET) {
                     </div>
                 </div>
                 <?php
+                    $i++;
                 } ?>
             </div>
         </div>
