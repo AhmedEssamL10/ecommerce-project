@@ -4,6 +4,8 @@ use App\Database\Models\Favorate;
 use App\Database\models\Products;
 
 $title = "Favorate";
+include "App/database/Http/Middlewares/Auth.php";
+
 include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
@@ -17,7 +19,6 @@ if ($_GET) {
     }
 }
 ?>
-
 <!-- shopping-cart-area start -->
 <div class="cart-main-area ptb-100">
     <div class="container">
