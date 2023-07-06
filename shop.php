@@ -4,6 +4,7 @@
 
 use App\Database\Http\Requests\validation;
 use App\Database\Models\Category;
+use App\Database\Models\Favorate;
 use App\Database\models\Products;
 use App\Database\Models\SubCategory;
 
@@ -12,7 +13,7 @@ $title = "Shop";
 include "layouts/header.php";
 include "layouts/navbar.php";
 $products = new Products;
-
+$favorate = new Favorate;
 // $brands = new Brands;
 if ($_GET) {
     if (isset($_GET['brand'])) {
@@ -44,6 +45,10 @@ if ($_GET) {
             include "layouts/errors/404.php";
         }
     }
+    if (isset($_GET['add'])) {
+        $favorate->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['add'])->addFavItem();
+        $result = $products->read()->fetch_all(MYSQLI_ASSOC);
+    }
 } else {
     $result = $products->read()->fetch_all(MYSQLI_ASSOC);
 }
@@ -62,8 +67,7 @@ $resultsubcat = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
                 <div class="shop-topbar-wrapper">
                     <div class="shop-topbar-left">
                         <ul class="view-mode">
-                            <li class="active"><a href="#product-grid" data-view="product-grid"><i
-                                        class="fa fa-th"></i></a></li>
+                            <li class="active"><a href="#product-grid" data-view="product-grid"><i class="fa fa-th"></i></a></li>
                             <li><a href="#product-list" data-view="product-list"><i class="fa fa-list-ul"></i></a></li>
                         </ul>
                         <p>Showing 1 - 20 of 30 results </p>
@@ -101,69 +105,64 @@ $resultsubcat = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
                                 # code...
 
                             ?>
-                            <div class="product-width col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
-                                <div class="product-wrapper">
-                                    <div class="product-img">
-                                        <a href="product-details.php?product=<?= $value['id'] ?>">
+                                <div class="product-width col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mb-30">
+                                    <div class="product-wrapper">
+                                        <div class="product-img">
+                                            <a href="product-details.php?product=<?= $value['id'] ?>">
 
-                                            <img alt="" src="assets/img/product/<?= $value['image'] ?>">
+                                                <img alt="" src="assets/img/product/<?= $value['image'] ?>">
 
-                                        </a>
-                                        <!-- <span>-30%</span> -->
-                                        <div class="product-action">
-                                            <a class="action-wishlist" href="#" title="Wishlist">
-                                                <i class="ion-android-favorite-outline"></i>
                                             </a>
-                                            <a class="action-cart" href="#" title="Add To Cart">
-                                                <i class="ion-ios-shuffle-strong"></i>
-                                            </a>
-                                            <a class="action-compare" href="#" data-target="#exampleModal"
-                                                data-toggle="modal" title="Quick View">
-                                                <i class="ion-ios-search-strong"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-content text-left">
-                                        <div class="product-hover-style">
-                                            <div class="product-title">
-                                                <h4>
-                                                    <a
-                                                        href="product-details.php?product=<?= $value['id'] ?>"><?= $value['en_name'] ?></a>
-                                                </h4>
-                                            </div>
-                                            <div class="cart-hover">
-                                                <h4><a href="product-details.php?product=<?= $value['id'] ?>">+ Add to
-                                                        cart</a></h4>
+                                            <!-- <span>-30%</span> -->
+                                            <div class="product-action">
+                                                <a class="action-wishlist" href="?add=<?= $value['id'] ?>" title="Favorate">
+                                                    <i class="ion-android-favorite-outline"></i>
+                                                </a>
+                                                <a class="action-cart" href="#" title="Add To Cart">
+                                                    <i class="ion-ios-shuffle-strong"></i>
+                                                </a>
+                                                <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                                    <i class="ion-ios-search-strong"></i>
+                                                </a>
                                             </div>
                                         </div>
-                                        <div class="product-price-wrapper">
-                                            <span><?= $value['price'] ?> $</span>
-                                            <!-- <span class="product-price-old">$120.00 </span> -->
+                                        <div class="product-content text-left">
+                                            <div class="product-hover-style">
+                                                <div class="product-title">
+                                                    <h4>
+                                                        <a href="product-details.php?product=<?= $value['id'] ?>"><?= $value['en_name'] ?></a>
+                                                    </h4>
+                                                </div>
+                                                <div class="cart-hover">
+                                                    <h4><a href="product-details.php?product=<?= $value['id'] ?>">+ Add to
+                                                            cart</a></h4>
+                                                </div>
+                                            </div>
+                                            <div class="product-price-wrapper">
+                                                <span>$ <?= $value['price'] ?> </span>
+                                                <!-- <span class="product-price-old">$120.00 </span> -->
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="product-list-details">
-                                        <h4>
-                                            <a
-                                                href="product-details.php?product=<?= $value['id'] ?>"><?= $value['en_name'] ?></a>
-                                        </h4>
-                                        <div class="product-price-wrapper">
-                                            <span><?= $value['price'] ?> $</span>
-                                            <!-- <span class="product-price-old">$120.00 </span> -->
+                                        <div class="product-list-details">
+                                            <h4>
+                                                <a href="product-details.php?product=<?= $value['id'] ?>"><?= $value['en_name'] ?></a>
+                                            </h4>
+                                            <div class="product-price-wrapper">
+                                                <span>$ <?= $value['price'] ?> </span>
+                                                <!-- <span class="product-price-old">$120.00 </span> -->
+                                            </div>
+                                            <p><?= $value['detiles_en'] ?></p>
+                                            <div class="shop-list-cart-wishlist">
+                                                <a href="#" title="Wishlist"><i class="ion-android-favorite-outline"></i></a>
+                                                <a href="#" title="Add To Cart"><i class="ion-ios-shuffle-strong"></i></a>
+                                                <a href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                                    <i class="ion-ios-search-strong"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <p><?= $value['detiles_en'] ?></p>
-                                        <div class="shop-list-cart-wishlist">
-                                            <a href="#" title="Wishlist"><i
-                                                    class="ion-android-favorite-outline"></i></a>
-                                            <a href="#" title="Add To Cart"><i class="ion-ios-shuffle-strong"></i></a>
-                                            <a href="#" data-target="#exampleModal" data-toggle="modal"
-                                                title="Quick View">
-                                                <i class="ion-ios-search-strong"></i>
-                                            </a>
-                                        </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
                             <?php  } ?>
                         </div>
 
@@ -201,23 +200,21 @@ $resultsubcat = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
                                     # code...
 
                                 ?>
-                                <li> <a data-toggle="collapse" data-parent="#faq"
-                                        href="#shop-catigory-1"><?= $cat['en_name'] ?><i
-                                            class="ion-ios-arrow-down"></i></a>
+                                    <li> <a data-toggle="collapse" data-parent="#faq" href="#shop-catigory-1"><?= $cat['en_name'] ?><i class="ion-ios-arrow-down"></i></a>
 
-                                    <ul id="shop-catigory-1" class="panel-collapse collapse show">
-                                        <?php
+                                        <ul id="shop-catigory-1" class="panel-collapse collapse show">
+                                            <?php
                                             foreach ($resultsubcat as $subcat) {
                                                 if ($cat['id'] == $subcat['catigories_id']) {
                                             ?>
-                                        <li><a href="#"><?= $subcat['en_name'] ?></a></li>
-                                        <?php
+                                                    <li><a href="#"><?= $subcat['en_name'] ?></a></li>
+                                            <?php
                                                 }
                                             }
                                             ?>
-                                    </ul>
+                                        </ul>
 
-                                </li>
+                                    </li>
                                 <?php
 
                                 } ?>
@@ -303,8 +300,7 @@ $resultsubcat = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">x</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -328,14 +324,10 @@ $resultsubcat = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
                         <!-- Thumbnail Image End -->
                         <div class="product-thumbnail">
                             <div class="thumb-menu owl-carousel nav nav-style" role="tablist">
-                                <a class="active" data-toggle="tab" href="#pro-1"><img
-                                        src="assets/img/product-details/product-detalis-s1.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-2"><img
-                                        src="assets/img/product-details/product-detalis-s2.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-3"><img
-                                        src="assets/img/product-details/product-detalis-s3.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-4"><img
-                                        src="assets/img/product-details/product-detalis-s4.jpg" alt=""></a>
+                                <a class="active" data-toggle="tab" href="#pro-1"><img src="assets/img/product-details/product-detalis-s1.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-2"><img src="assets/img/product-details/product-detalis-s2.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-3"><img src="assets/img/product-details/product-detalis-s3.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-4"><img src="assets/img/product-details/product-detalis-s4.jpg" alt=""></a>
                             </div>
                         </div>
                         <!-- Thumbnail image end -->
