@@ -38,29 +38,39 @@ $subresult = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
 
 
                                             ?>
-                                            <li>
-                                                <ul>
-                                                    <li class="font-weight-bold">
-                                                        <?= ucwords($value['en_name'])  ?></li>
+                                                <li>
+                                                    <ul>
+                                                        <li class="font-weight-bold">
+                                                            <?= ucwords($value['en_name'])  ?></li>
 
-                                                    <?php
+                                                        <?php
                                                         foreach ($subresult as $subvalue) {
                                                             if ($subvalue['catigories_id'] == $value['id']) {
                                                         ?>
-                                                    <li><a
-                                                            href="shop.php?subcategory=<?= $subvalue['id'] ?>"><?= $subvalue['en_name'] ?></a>
-                                                    </li>
+                                                                <li><a href="shop.php?subcategory=<?= $subvalue['id'] ?>"><?= $subvalue['en_name'] ?></a>
+                                                                </li>
 
-                                                    <?php
+                                                        <?php
                                                             }
                                                         } ?>
 
-                                                </ul>
-                                            </li>
+                                                    </ul>
+                                                </li>
                                             <?php } ?>
                                         </ul>
                                     </li>
+                                    <?php
+                                    if (isset($_SESSION['user'])) {
+                                    ?>
+                                        <li class="top-hover"><a href="cart-page.php">Cart</a>
+                                        </li>
+                                        <li class="top-hover"><a href="wishlist.php">Favorate</a>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
                                     <li><a href="about-us.php">about</a></li>
+
 
                                     <li><a href="contact.php">contact</a></li>
                                 </ul>
@@ -69,28 +79,27 @@ $subresult = $subcatagory->read()->fetch_all(MYSQLI_ASSOC);
                         <?php
                         if (isset($_SESSION['user'])) {
                         ?>
-                        <div class="header-currency">
-                            <span class="digit"><?= $_SESSION['user']->first_name ?> <i
-                                    class="ti-angle-down"></i></span>
-                            <div class="dollar-submenu">
-                                <ul>
-                                    <li><a href="my-account.php">Profile</a></li>
-                                    <li><a href="logout.php">Logout</a></li>
-                                </ul>
+                            <div class="header-currency">
+                                <span class="digit"><?= $_SESSION['user']->first_name ?> <i class="ti-angle-down"></i></span>
+                                <div class="dollar-submenu">
+                                    <ul>
+                                        <li><a href="my-account.php">Profile</a></li>
+                                        <li><a href="logout.php">Logout</a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         <?php } else {
                         ?>
-                        <div class="header-currency">
-                            <span class="digit">Welcome <i class="ti-angle-down"></i></span>
-                            <div class="dollar-submenu">
-                                <ul>
-                                    <li><a href="login.php">Login</a></li>
-                                    <li><a href="register.php">Register</a></li>
+                            <div class="header-currency">
+                                <span class="digit">Welcome <i class="ti-angle-down"></i></span>
+                                <div class="dollar-submenu">
+                                    <ul>
+                                        <li><a href="login.php">Login</a></li>
+                                        <li><a href="register.php">Register</a></li>
 
-                                </ul>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         <?php } ?>
                         <div class="header-cart">
                             <a href="#">
