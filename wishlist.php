@@ -4,11 +4,11 @@ use App\Database\Models\Favorate;
 use App\Database\models\Products;
 
 $title = "Favorate";
-include "App/database/Http/Middlewares/Auth.php";
 
 include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
+include "App/database/Http/Middlewares/Auth.php";
 $favorate = new Favorate;
 $result = $favorate->setUsers_id($_SESSION['user']->id)->favorateList()->fetch_all(MYSQLI_ASSOC);
 $products = new Products;
