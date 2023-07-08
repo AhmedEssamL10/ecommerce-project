@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\Models\Brands;
+use App\Database\Models\Cart;
 use App\Database\Models\Favorate;
 use App\Database\models\Products;
 
@@ -13,9 +14,12 @@ $newProduct = $product->newProducts()->fetch_all(MYSQLI_ASSOC);
 $brands = new Brands;
 $result = $brands->read()->fetch_all(MYSQLI_ASSOC);
 $favorate = new Favorate;
+$carts = new Cart;
 if ($_GET) {
     if (isset($_GET['add'])) {
         $favorate->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['add'])->addFavItem();
+    } elseif (isset($_GET['cart'])) {
+        $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['cart'])->setQuantity(1)->addCartItem();
     }
 }
 // var_dump($result);
@@ -130,7 +134,7 @@ if ($_GET) {
                                         <a class="action-wishlist" href="?add=<?= $product['id'] ?>" title="Favorate">
                                             <i class="ion-android-favorite-outline"></i>
                                         </a>
-                                        <a class="action-cart" href="#" title="Add To Cart">
+                                        <a class="action-cart" href="?cart=<?= $product['id'] ?>" title="Add To Cart">
                                             <i class="ion-ios-shuffle-strong"></i>
                                         </a>
                                         <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">

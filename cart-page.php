@@ -1,8 +1,19 @@
 <?php
+
+use App\Database\Models\Cart;
+
 $title = "Cart";
 include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
+$carts = new Cart;
+$result = $carts->setUsers_id($_SESSION['user']->id)->cartList()->fetch_all(MYSQLI_ASSOC);
+// print_r($result);
+if ($_GET) {
+    if (isset($_GET['delete'])) {
+        $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['delete'])->deleteCartItem();
+    }
+}
 ?>
 <!-- shopping-cart-area start -->
 <div class="cart-main-area ptb-100">
@@ -15,7 +26,7 @@ include "layouts/breadcrumb.php";
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Image</th>
+                                    <!-- <th>Image</th> -->
                                     <th>Product Name</th>
                                     <th>Until Price</th>
                                     <th>Qty</th>
@@ -24,57 +35,38 @@ include "layouts/breadcrumb.php";
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="assets/img/cart/cart-3.jpg" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Dutchman's Breeches </a></td>
-                                    <td class="product-price-cart"><span class="amount">$260.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="pro-dec-cart">
-                                            <input class="cart-plus-minus-box" type="text" value="02" name="qtybutton">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$110.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="assets/img/cart/cart-4.jpg" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Flowers Bouquet Pink</a></td>
-                                    <td class="product-price-cart"><span class="amount">$150.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="pro-dec-cart">
-                                            <input class="cart-plus-minus-box" type="text" value="02" name="qtybutton">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$150.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="assets/img/cart/cart-5.jpg" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Evergreen Candytuft </a></td>
-                                    <td class="product-price-cart"><span class="amount">$170.00</span></td>
-                                    <td class="product-quantity">
-                                        <div class="pro-dec-cart">
-                                            <input class="cart-plus-minus-box" type="text" value="02" name="qtybutton">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$170.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                        <a href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
+                                <?php
+                                foreach ($result as $value) {
+                                    # code...
+
+                                ?>
+                                    <tr>
+                                        <!-- <td class="product-thumbnail">
+                                        <a href="#"><img src="assets/img/value/value-3.jpg" alt=""></a>
+                                    </td> -->
+                                        <td class="product-name"><a href="#"><?= $value['en_name'] ?></a></td>
+                                        <td class="product-price-value"><span class="amount">$<?= $value['price'] ?></span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <form method="post">
+                                                <div class="pro-dec-value">
+                                                    <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton">
+                                                </div>
+                                            </form>
+                                        </td>
+                                        <td class="product-subtotal">$<?= $value['price'] * $value['quantity']  ?></td>
+                                        <td class="product-remove">
+                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
+                                        <td class="product-remove">
+                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
+
+                                            <a href="?delete=<?= $value['products_id'] ?>" class="delete-link"><i class="fa fa-times"></i></a>
+
+                                        </td>
+                                        </td>
+                                    </tr>
+                                <?php
+                                } ?>
                             </tbody>
                         </table>
                     </div>
