@@ -58,94 +58,95 @@ if ($_GET) {
                 # code...
 
             ?>
-                <div class="col-lg-6 col-md-12">
-                    <div class="product-details-img">
-                        <img class="zoompro" src="assets/img/product/<?= $value['image'] ?>" data-zoom-image="assets/img/product/<?= $value['image'] ?>" alt="zoom" />
+            <div class="col-lg-6 col-md-12">
+                <div class="product-details-img">
+                    <img class="zoompro" src="assets/img/product/<?= $value['image'] ?>"
+                        data-zoom-image="assets/img/product/<?= $value['image'] ?>" alt="zoom" />
 
-                        <!-- <span>-29%</span> -->
-                    </div>
+                    <!-- <span>-29%</span> -->
                 </div>
-                <div class="col-lg-6 col-md-12">
-                    <div class="product-details-content">
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="product-details-content">
 
-                        <h4><?= $value['en_name'] ?></h4>
-                        <div class="rating-review">
-                            <div class="pro-dec-rating">
-                                <?php
+                    <h4><?= $value['en_name'] ?></h4>
+                    <div class="rating-review">
+                        <div class="pro-dec-rating">
+                            <?php
                                 for ($i = 0; $i < $numOfRates[0]['avg_Rates']; $i++) {
                                     # code...
 
                                 ?>
-                                    <i class="ion-android-star-outline theme-star"></i>
-                                <?php
+                            <i class="ion-android-star-outline theme-star"></i>
+                            <?php
                                 }
                                 ?>
-                                <?php
+                            <?php
                                 for ($i = 0; $i < 5 - $numOfRates[0]['avg_Rates']; $i++) {
                                     # code...
 
                                 ?>
-                                    <i class="ion-android-star-outline"></i>
-                                <?php
+                            <i class="ion-android-star-outline"></i>
+                            <?php
                                 }
                                 ?>
 
-                            </div>
-                            <div class="pro-dec-review">
-                                <ul>
-                                    <li><?= $numOfRates[0]['num_Rates'] ?> Reviews </li>
-                                    <li> Add Your Reviews</li>
-                                </ul>
-                            </div>
                         </div>
-                        <span>$<?= $value['price'] ?></span>
-                        <?php
+                        <div class="pro-dec-review">
+                            <ul>
+                                <li><?= $numOfRates[0]['num_Rates'] ?> Reviews </li>
+                                <li> Add Your Reviews</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span>$<?= $value['price'] ?></span>
+                    <?php
                         if ($value['quantity'] > 5) {
                         ?>
-                            <div class="in-stock">
-                                <p>Available: <span>In stock</span></p>
-                            </div>
-                        <?php
+                    <div class="in-stock">
+                        <p>Available: <span>In stock</span></p>
+                    </div>
+                    <?php
                         } elseif ($value['quantity'] == 0) {
                         ?>
-                            <div class="in-stock">
-                                <p>Available: <span style="color:red">Out of stock</span></p>
-                            </div>
-                        <?php
+                    <div class="in-stock">
+                        <p>Available: <span style="color:red">Out of stock</span></p>
+                    </div>
+                    <?php
                         } elseif ($value['quantity'] <= 5 && $value['quantity'] >= 1) {
                         ?>
-                            <div class="in-stock">
-                                <p>Available: <span style="color:darkorange">In stock </span></p>
-                            </div>
-                            <div class="in-stock">
-                                <p>Quantity: <span style="color:darkorange"> <?= $value['quantity'] ?> </span></p>
-                            </div>
+                    <div class="in-stock">
+                        <p>Available: <span style="color:darkorange">In stock </span></p>
+                    </div>
+                    <div class="in-stock">
+                        <p>Quantity: <span style="color:darkorange"> <?= $value['quantity'] ?> </span></p>
+                    </div>
 
 
-                        <?php
+                    <?php
                         }
                         ?>
 
-                        <div class="quality-add-to-cart">
-                            <div class="quality">
-                                <label>Qty:</label>
-                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                            </div>
+                    <div class="quality-add-to-cart">
+                        <div class="quality">
+                            <label>Qty:</label>
+                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                        </div>
 
-                            <div class="shop-list-cart-wishlist">
-                                <a title="Add To Cart" href="#">
-                                    <i class="icon-handbag"></i>
-                                    cart
-                                </a>
-                                <a title="Favorate" href="?add=<?= $value['id'] ?>">
-                                    <i class="icon-heart"></i>
-                                    fav
-                                </a>
-                            </div>
+                        <div class="shop-list-cart-wishlist">
+                            <a title="Add To Cart" href="#">
+                                <i class="icon-handbag"></i>
+                                cart
+                            </a>
+                            <a title="Favorate" href="?add=<?= $value['id'] ?>">
+                                <i class="icon-heart"></i>
+                                fav
+                            </a>
                         </div>
                     </div>
-
                 </div>
+
+            </div>
             <?php
             } ?>
         </div>
@@ -166,103 +167,103 @@ if ($_GET) {
                     # code...
                     $i = 0;
                 ?>
-                    <div id="des-details1" class="tab-pane active">
-                        <div class="product-description-wrapper">
-                            <p><?= $value['detiles_en'] ?> </p>
+                <div id="des-details1" class="tab-pane active">
+                    <div class="product-description-wrapper">
+                        <p><?= $value['detiles_en'] ?> </p>
 
 
-                        </div>
                     </div>
+                </div>
 
 
-                    <div id="des-details3" class="tab-pane">
-                        <div class="rattings-wrapper">
-                            <?php
+                <div id="des-details3" class="tab-pane">
+                    <div class="rattings-wrapper">
+                        <?php
                             foreach ($reviewResult as $value) {
                                 # code...
 
                             ?>
-                                <div class="sin-rattings">
-                                    <div class="star-author-all">
-                                        <div class="pro-dec-rating">
-                                            <?php
+                        <div class="sin-rattings">
+                            <div class="star-author-all">
+                                <div class="pro-dec-rating">
+                                    <?php
                                             for ($i = 0; $i < $value['rate']; $i++) {
                                                 # code...
 
                                             ?>
-                                                <i class="ion-android-star-outline theme-star"></i>
-                                            <?php
+                                    <i class="ion-android-star-outline theme-star"></i>
+                                    <?php
                                             }
                                             ?>
-                                            <?php
+                                    <?php
                                             for ($i = 0; $i < 5 - $value['rate']; $i++) {
                                                 # code...
 
                                             ?>
-                                                <i class="ion-android-star-outline"></i>
-                                            <?php
+                                    <i class="ion-android-star-outline"></i>
+                                    <?php
                                             }
                                             ?>
-                                            <span> (<?= $value['rate']  ?>)</span>
-                                        </div>
-                                        <div class="ratting-author f-right">
-                                            <?php
+                                    <span> (<?= $value['rate']  ?>)</span>
+                                </div>
+                                <div class="ratting-author f-right">
+                                    <?php
 
                                             if ($i <= $numOfRates[0]['num_Rates']) {
 
                                             ?>
-                                                <h3><?= $nameRates[$i - 1]['full_name'] ?></h3>
-                                            <?php
+                                    <h3><?= $nameRates[$i - 1]['full_name'] ?></h3>
+                                    <?php
 
                                             }
 
 
                                             ?>
-                                            <span><?= $value['created_at'] ?></span>
-                                        </div>
-                                    </div>
-                                    <p><?= $value['comment'] ?></p>
+                                    <span><?= $value['created_at'] ?></span>
                                 </div>
-                            <?php
+                            </div>
+                            <p><?= $value['comment'] ?></p>
+                        </div>
+                        <?php
                             }
                             ?>
-                        </div>
-                        <div class="ratting-form-wrapper">
-                            <h3>Add your Comments :</h3>
-                            <div class="ratting-form">
-                                <form action="#">
-                                    <div class="star-box">
-                                        <h2>Rating:</h2>
-                                        <div class="ratting-star">
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star"></i>
+                    </div>
+                    <div class="ratting-form-wrapper">
+                        <h3>Add your Comments :</h3>
+                        <div class="ratting-form">
+                            <form action="#">
+                                <div class="star-box">
+                                    <h2>Rating:</h2>
+                                    <div class="ratting-star">
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star"></i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="rating-form-style mb-20">
+                                            <input placeholder="Name" type="text">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="rating-form-style mb-20">
-                                                <input placeholder="Name" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="rating-form-style mb-20">
-                                                <input placeholder="Email" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="rating-form-style form-submit">
-                                                <textarea name="message" placeholder="Message"></textarea>
-                                                <input type="submit" value="add review">
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="rating-form-style mb-20">
+                                            <input placeholder="Email" type="text">
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="col-md-12">
+                                        <div class="rating-form-style form-submit">
+                                            <textarea name="message" placeholder="Message"></textarea>
+                                            <input type="submit" value="add review">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
+                </div>
                 <?php
                     $i++;
                 } ?>
@@ -270,190 +271,6 @@ if ($_GET) {
         </div>
     </div>
 </div>
-<!-- <div class="product-area pb-100">
-    <div class="container">
-        <div class="product-top-bar section-border mb-35">
-            <div class="section-title-wrap">
-                <h3 class="section-title section-bg-white">Related Products</h3>
-            </div>
-        </div>
-        <div class="featured-product-active hot-flower owl-carousel product-nav">
-            <div class="product-wrapper">
-                <div class="product-img">
-                    <a href="product-details.php">
-                        <img alt="" src="assets/img/product/product-1.jpg">
-                    </a>
-                    <span>-30%</span>
-                    <div class="product-action">
-                        <a class="action-wishlist" href="#" title="Wishlist">
-                            <i class="ion-android-favorite-outline"></i>
-                        </a>
-                        <a class="action-cart" href="#" title="Add To Cart">
-                            <i class="ion-ios-shuffle-strong"></i>
-                        </a>
-                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                            <i class="ion-ios-search-strong"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="product-content text-left">
-                    <div class="product-hover-style">
-                        <div class="product-title">
-                            <h4>
-                                <a href="product-details.php">Le Bongai Tea</a>
-                            </h4>
-                        </div>
-                        <div class="cart-hover">
-                            <h4><a href="product-details.php">+ Add to cart</a></h4>
-                        </div>
-                    </div>
-                    <div class="product-price-wrapper">
-                        <span>$100.00 -</span>
-                        <span class="product-price-old">$120.00 </span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-wrapper">
-                <div class="product-img">
-                    <a href="product-details.php">
-                        <img alt="" src="assets/img/product/product-2.jpg">
-                    </a>
-                    <div class="product-action">
-                        <a class="action-wishlist" href="#" title="Wishlist">
-                            <i class="ion-android-favorite-outline"></i>
-                        </a>
-                        <a class="action-cart" href="#" title="Add To Cart">
-                            <i class="ion-ios-shuffle-strong"></i>
-                        </a>
-                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                            <i class="ion-ios-search-strong"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="product-content text-left">
-                    <div class="product-hover-style">
-                        <div class="product-title">
-                            <h4>
-                                <a href="product-details.php">Society Ice Tea</a>
-                            </h4>
-                        </div>
-                        <div class="cart-hover">
-                            <h4><a href="product-details.php">+ Add to cart</a></h4>
-                        </div>
-                    </div>
-                    <div class="product-price-wrapper">
-                        <span>$100.00 -</span>
-                        <span class="product-price-old">$120.00 </span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-wrapper">
-                <div class="product-img">
-                    <a href="product-details.php">
-                        <img alt="" src="assets/img/product/product-3.jpg">
-                    </a>
-                    <span>-30%</span>
-                    <div class="product-action">
-                        <a class="action-wishlist" href="#" title="Wishlist">
-                            <i class="ion-android-favorite-outline"></i>
-                        </a>
-                        <a class="action-cart" href="#" title="Add To Cart">
-                            <i class="ion-ios-shuffle-strong"></i>
-                        </a>
-                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                            <i class="ion-ios-search-strong"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="product-content text-left">
-                    <div class="product-hover-style">
-                        <div class="product-title">
-                            <h4>
-                                <a href="product-details.php">Green Tea Tulsi</a>
-                            </h4>
-                        </div>
-                        <div class="cart-hover">
-                            <h4><a href="product-details.php">+ Add to cart</a></h4>
-                        </div>
-                    </div>
-                    <div class="product-price-wrapper">
-                        <span>$100.00 -</span>
-                        <span class="product-price-old">$120.00 </span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-wrapper">
-                <div class="product-img">
-                    <a href="product-details.php">
-                        <img alt="" src="assets/img/product/product-4.jpg">
-                    </a>
-                    <div class="product-action">
-                        <a class="action-wishlist" href="#" title="Wishlist">
-                            <i class="ion-android-favorite-outline"></i>
-                        </a>
-                        <a class="action-cart" href="#" title="Add To Cart">
-                            <i class="ion-ios-shuffle-strong"></i>
-                        </a>
-                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                            <i class="ion-ios-search-strong"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="product-content text-left">
-                    <div class="product-hover-style">
-                        <div class="product-title">
-                            <h4>
-                                <a href="product-details.php">Best Friends Tea</a>
-                            </h4>
-                        </div>
-                        <div class="cart-hover">
-                            <h4><a href="product-details.php">+ Add to cart</a></h4>
-                        </div>
-                    </div>
-                    <div class="product-price-wrapper">
-                        <span>$100.00 -</span>
-                        <span class="product-price-old">$120.00 </span>
-                    </div>
-                </div>
-            </div>
-            <div class="product-wrapper">
-                <div class="product-img">
-                    <a href="product-details.php">
-                        <img alt="" src="assets/img/product/product-5.jpg">
-                    </a>
-                    <span>-30%</span>
-                    <div class="product-action">
-                        <a class="action-wishlist" href="#" title="Wishlist">
-                            <i class="ion-android-favorite-outline"></i>
-                        </a>
-                        <a class="action-cart" href="#" title="Add To Cart">
-                            <i class="ion-ios-shuffle-strong"></i>
-                        </a>
-                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                            <i class="ion-ios-search-strong"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="product-content text-left">
-                    <div class="product-hover-style">
-                        <div class="product-title">
-                            <h4>
-                                <a href="product-details.php">Instant Tea Premix</a>
-                            </h4>
-                        </div>
-                        <div class="cart-hover">
-                            <h4><a href="product-details.php">+ Add to cart</a></h4>
-                        </div>
-                    </div>
-                    <div class="product-price-wrapper">
-                        <span>$100.00 -</span>
-                        <span class="product-price-old">$120.00 </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
 
 <!-- Footer style End -->
 <!-- Modal -->
@@ -461,7 +278,8 @@ if ($_GET) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">x</span></button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -485,10 +303,14 @@ if ($_GET) {
                         <!-- Thumbnail Image End -->
                         <div class="product-thumbnail">
                             <div class="thumb-menu owl-carousel nav nav-style" role="tablist">
-                                <a class="active" data-toggle="tab" href="#pro-1"><img src="assets/img/product-details/product-detalis-s1.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-2"><img src="assets/img/product-details/product-detalis-s2.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-3"><img src="assets/img/product-details/product-detalis-s3.jpg" alt=""></a>
-                                <a data-toggle="tab" href="#pro-4"><img src="assets/img/product-details/product-detalis-s4.jpg" alt=""></a>
+                                <a class="active" data-toggle="tab" href="#pro-1"><img
+                                        src="assets/img/product-details/product-detalis-s1.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-2"><img
+                                        src="assets/img/product-details/product-detalis-s2.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-3"><img
+                                        src="assets/img/product-details/product-detalis-s3.jpg" alt=""></a>
+                                <a data-toggle="tab" href="#pro-4"><img
+                                        src="assets/img/product-details/product-detalis-s4.jpg" alt=""></a>
                             </div>
                         </div>
                         <!-- Thumbnail image end -->
