@@ -14,7 +14,6 @@ if ($_GET) {
         $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['delete'])->deleteCartItem();
         header("location:cart-page.php");
     }
-    // $carts->setUsers_id($_SESSION['user']->id)->setProducts_id(4)->setQuantity(2)->updateQuantity();
 }
 
 if ($_POST) {

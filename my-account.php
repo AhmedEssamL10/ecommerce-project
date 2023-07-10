@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\Http\Requests\validation;
+use App\Database\Models\Address;
 use App\Services\Media;
 use App\Database\Models\User;
 
@@ -10,7 +11,7 @@ include "App/database/Http/Middlewares/Auth.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
 $validation = new validation;
-
+$address = new Address;
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['upload-image'])) {
         if ($_FILES['image']['error'] == 0) {
@@ -49,6 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $user->setPassword($_POST['password'])->setEmail($_SESSION['user']->email)->updatePassword();
             header("location:logout.php");
         }
+    }
+}
+if (isset($_SESSION['user'])) {
+    $myAddress = $address->setUsers_id($_SESSION['user']->id)->read()->fetch_all(MYSQLI_ASSOC);
+    if ($address->setUsers_id($_SESSION['user']->id)->read()->num_rows == 0) {
+        $error =  "<div style='display: flex; justify-content: center; align-items: center; height: 20vh;'>
+        <h3 style='color: #008000 !important;'>Enter your address </h3>
+      </div>";
     }
 }
 ?>
@@ -201,12 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                                     <div class="entries-info text-center">
-                                                        <p>Farhana hayder (shuvo) </p>
-                                                        <p>hastech </p>
-                                                        <p> Road#1 , Block#c </p>
-                                                        <p> Rampura. </p>
-                                                        <p>Dhaka </p>
-                                                        <p>Bangladesh </p>
+                                                        <p> <?= $error ?? '' ?> </p>
+                                                        <p>Country: <?= 'Egypy' ?></p>
+                                                        <p>City: <?= $myAddress[0]['city'] ?? '?' ?> </p>
+                                                        <p>Region: <?= $myAddress[0]['region'] ?? '?' ?></p>
+                                                        <p>Street: <?= $myAddress[0]['street'] ?? '?' ?></p>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
