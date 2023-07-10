@@ -107,4 +107,12 @@ class Cart extends Model implements Crud
         $stmt->bind_Param('iii', $this->users_id, $this->products_id, $this->quantity);
         return  $stmt->execute();
     }
+    public function updateQuantity()
+    {
+        $query = "UPDATE `carts` SET `quantity`=? WHERE `users_id` = ? AND `products_id`=?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_Param('iii', $this->quantity, $this->users_id, $this->products_id);
+        return  $stmt->execute();
+    }
 }
+//

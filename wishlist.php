@@ -2,6 +2,7 @@
 
 use App\Database\Models\Favorate;
 use App\Database\models\Products;
+use App\Database\Models\Cart;
 
 $title = "Favorate";
 
@@ -12,10 +13,16 @@ include "App/database/Http/Middlewares/Auth.php";
 $favorate = new Favorate;
 $result = $favorate->setUsers_id($_SESSION['user']->id)->favorateList()->fetch_all(MYSQLI_ASSOC);
 $products = new Products;
+$carts = new Cart;
 $proresult = $products->read()->fetch_all(MYSQLI_ASSOC);
 if ($_GET) {
     if (isset($_GET['delete'])) {
         $favorate->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['delete'])->deleteFavItem();
+        header("location:wishlist.php");
+    } elseif (isset($_GET['cart'])) {
+        $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['cart'])->setQuantity(1)->addCartItem();
+        $result = $products->read()->fetch_all(MYSQLI_ASSOC);
+        header("location:wishlist.php");
     }
 }
 ?>
@@ -44,24 +51,26 @@ if ($_GET) {
                                     # code...
 
                                 ?>
-                                    <tr>
-                                        <!-- <td class="product-thumbnail">
+                                <tr>
+                                    <!-- <td class="product-thumbnail">
                                         <a><img src="assets/img/product/ $value['productImage'] " alt=""></a>
                                     </td> -->
-                                        <td class="product-name"><a href="product-details.php?product=<?= $value['products_id'] ?>"><?= $value['en_name'] ?></a>
-                                        </td>
-                                        <td class="product-price-cart"><span class="amount">$<?= $value['price'] ?></span>
-                                        </td>
-                                        <td class="product-wishlist-cart">
-                                            <a href="cart-page.php?product=<?= $value['products_id'] ?>">add to cart</a>
-                                        </td>
-                                        <td class="product-remove">
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
+                                    <td class="product-name"><a
+                                            href="product-details.php?product=<?= $value['products_id'] ?>"><?= $value['en_name'] ?></a>
+                                    </td>
+                                    <td class="product-price-cart"><span class="amount">$<?= $value['price'] ?></span>
+                                    </td>
+                                    <td class="product-wishlist-cart">
+                                        <a href="?cart=<?= $value['products_id'] ?>">add to cart</a>
+                                    </td>
+                                    <td class="product-remove">
+                                        <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
 
-                                            <a href="wishlist.php?delete=<?= $value['products_id'] ?>" class="delete-link"><i class="fa fa-times"></i></a>
+                                        <a href="wishlist.php?delete=<?= $value['products_id'] ?>"
+                                            class="delete-link"><i class="fa fa-times"></i></a>
 
-                                        </td>
-                                    </tr>
+                                    </td>
+                                </tr>
 
                                 <?php
                                 }

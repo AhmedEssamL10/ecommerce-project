@@ -12,8 +12,21 @@ $result = $carts->setUsers_id($_SESSION['user']->id)->cartList()->fetch_all(MYSQ
 if ($_GET) {
     if (isset($_GET['delete'])) {
         $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['delete'])->deleteCartItem();
+        header("location:cart-page.php");
+    }
+    // $carts->setUsers_id($_SESSION['user']->id)->setProducts_id(4)->setQuantity(2)->updateQuantity();
+}
+
+if ($_POST) {
+    if (isset($_POST['update'])) {
+        $qty = $_POST['qtybutton'];
+        foreach ($qty as $key => $value) {
+            $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($key)->setQuantity($value)->updateQuantity();
+            header("location:cart-page.php");
+        }
     }
 }
+
 ?>
 <!-- shopping-cart-area start -->
 <div class="cart-main-area ptb-100">
@@ -21,7 +34,7 @@ if ($_GET) {
         <h3 class="page-title">Your cart items</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
+                <form action="#" method="post">
                     <div class="table-content table-responsive">
                         <table>
                             <thead>
@@ -48,15 +61,15 @@ if ($_GET) {
                                         <td class="product-price-value"><span class="amount">$<?= $value['price'] ?></span>
                                         </td>
                                         <td class="product-quantity">
-                                            <form method="post">
-                                                <div class="pro-dec-value">
-                                                    <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton">
-                                                </div>
-                                            </form>
+
+                                            <div class="pro-dec-value">
+                                                <!-- <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton[]"> -->
+                                                <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton[<?= $value['products_id'] ?>]">
+                                            </div>
                                         </td>
                                         <td class="product-subtotal">$<?= $value['price'] * $value['quantity']  ?></td>
-                                        <td class="product-remove">
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
+                                        <!-- <td class="product-remove"> -->
+                                        <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
                                         <td class="product-remove">
                                             <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
 
@@ -74,10 +87,10 @@ if ($_GET) {
                         <div class="col-lg-12">
                             <div class="cart-shiping-update-wrapper">
                                 <div class="cart-shiping-update">
-                                    <a href="#">Continue Shopping</a>
+                                    <a href="shop.php">Continue Shopping</a>
                                 </div>
                                 <div class="cart-clear">
-                                    <button>Update Shopping Cart</button>
+                                    <button name="update" type="submit">Update Shopping Cart</button>
                                     <a href="#">Clear Shopping Cart</a>
                                 </div>
                             </div>
