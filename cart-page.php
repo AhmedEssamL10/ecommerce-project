@@ -24,6 +24,10 @@ if ($_POST) {
             header("location:cart-page.php");
         }
     }
+    if (isset($_POST['clear'])) {
+        $carts->setUsers_id($_SESSION['user']->id)->deleteAll();
+        header("location:cart-page.php");
+    }
 }
 
 ?>
@@ -90,14 +94,14 @@ if ($_POST) {
                                 </div>
                                 <div class="cart-clear">
                                     <button name="update" type="submit">Update Shopping Cart</button>
-                                    <a href="#">Clear Shopping Cart</a>
+                                    <button name="clear" type="submit">Clear Shopping Cart</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6">
+                    <!-- <div class="col-lg-4 col-md-6">
                         <div class="cart-tax">
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gray">Estimate Shipping And Tax</h4>
@@ -139,8 +143,8 @@ if ($_POST) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
+                    </div> -->
+                    <!-- <div class="col-lg-4 col-md-6">
                         <div class="discount-code-wrapper">
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gray">Use Coupon Code</h4>
@@ -153,22 +157,26 @@ if ($_POST) {
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-lg-4 col-md-12">
                         <div class="grand-totall">
                             <div class="title-wrap">
                                 <h4 class="cart-bottom-title section-bg-gary-cart">Cart Total</h4>
                             </div>
-                            <h5>Total products <span>$260.00</span></h5>
-                            <div class="total-shipping">
-                                <h5>Total shipping</h5>
-                                <ul>
-                                    <li><input type="checkbox"> Standard <span>$20.00</span></li>
-                                    <li><input type="checkbox"> Express <span>$30.00</span></li>
-                                </ul>
-                            </div>
-                            <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
-                            <a href="#">Proceed to Checkout</a>
+                            <?php
+                            $i = 0;
+                            foreach ($result as $value) {
+                                $i = $i + $value['price'];
+                            }
+                            ?>
+                            <h5>Total products <span>$<?= $i ?></span></h5>
+
+                            <!-- <div class="total-shipping"> -->
+                            <h5>Total shipping <span> $30.00 </span></h5>
+
+                            <!-- </div> -->
+                            <h4 class="grand-totall-title">Grand Total <span>$<?= $i + 30 ?></span></h4>
+                            <a href="checkout.php">Proceed to Checkout</a>
                         </div>
                     </div>
                 </div>

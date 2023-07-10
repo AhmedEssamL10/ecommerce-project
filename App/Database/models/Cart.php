@@ -114,5 +114,12 @@ class Cart extends Model implements Crud
         $stmt->bind_Param('iii', $this->quantity, $this->users_id, $this->products_id);
         return  $stmt->execute();
     }
+    public function deleteAll()
+    {
+        $query = "DELETE FROM `carts` WHERE `users_id` = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_Param('i', $this->users_id);
+        return  $stmt->execute();
+    }
 }
-//
+//DELETE FROM `carts` WHERE `users_id` = ?
