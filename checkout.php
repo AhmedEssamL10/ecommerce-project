@@ -3,15 +3,40 @@ $title = "Checkout";
 include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
+
+use App\Database\Models\Address;
+use App\Database\Models\Cart;
+use App\Database\Models\Orders_products;
+
+$carts = new Cart;
+$order = new Orders_products;
+$address = new Address;
+if (isset($_SESSION['user'])) {
+    $result = $carts->setUsers_id($_SESSION['user']->id)->cartList()->fetch_all(MYSQLI_ASSOC);
+    $myAddress = $address->setUsers_id($_SESSION['user']->id)->read()->fetch_all(MYSQLI_ASSOC);
+    if ($address->setUsers_id($_SESSION['user']->id)->read()->num_rows == 0) {
+        $error =  "<div style='display: flex; justify-content: center; align-items: center; height: 20vh;'>
+        <h3 style='color: #008000 !important;'>Enter your address </h3>
+      </div>";
+    }
+    if (isset($_POST['ordering'])) {
+        $order->setUser_id($_SESSION['user']->id)->create();
+        $carts->setUsers_id($_SESSION['user']->id)->deleteAll();
+        $success = "<div class='alert alert-success text-center'> The process is done ... We will contact you to receive your order </div>";
+        header('refresh:3; url=index.php');
+    }
+}
+
 ?>
 <!-- checkout-area start -->
+<?= $success ?? '' ?>
 <div class="checkout-area pb-80 pt-100">
     <div class="container">
         <div class="row">
             <div class="col-lg-9">
                 <div class="checkout-wrapper">
                     <div id="faq" class="panel-group">
-                        <div class="panel panel-default">
+                        <!-- <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h5 class="panel-title"><span>1.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-1">Checkout method</a></h5>
                             </div>
@@ -70,7 +95,7 @@ include "layouts/breadcrumb.php";
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h5 class="panel-title"><span>2.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-2">billing information</a></h5>
@@ -82,52 +107,52 @@ include "layouts/breadcrumb.php";
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>First Name</label>
-                                                    <input type="text">
+                                                    <input type="text" name="first_name" value="<?= $_SESSION['user']->first_name ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Last Name</label>
-                                                    <input type="text">
+                                                    <input type="text" name="last_name" value="<?= $_SESSION['user']->last_name ?>">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6">
+                                            <!-- <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Company</label>
                                                     <input type="text">
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Email Address</label>
-                                                    <input type="email">
+                                                    <input type="email" name="email" value="<?= $_SESSION['user']->email ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="billing-info">
                                                     <label>Address</label>
-                                                    <input type="text">
+                                                    <input type="text" name="address" value="<?= $myAddress[0]['region'] . " - " . $myAddress[0]['street'] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>city</label>
-                                                    <input type="text">
+                                                    <input type="text" name="city" value="<?= $myAddress[0]['city'] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
-                                                    <label>State/Province</label>
-                                                    <input type="text">
+                                                    <label>Country</label>
+                                                    <input type="text" name="country" value="Egypt">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6">
+                                            <!-- <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Zip/Postal Code</label>
                                                     <input type="text">
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6 col-md-6">
+                                            </div> -->
+                                            <!-- <div class="col-lg-6 col-md-6">
                                                 <div class="billing-select">
                                                     <label>Country</label>
                                                     <select>
@@ -139,21 +164,21 @@ include "layouts/breadcrumb.php";
                                                         <option value="6">Barbados</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Telephone</label>
-                                                    <input type="text">
+                                                    <input type="text" name="phone" value="<?= $_SESSION['user']->phone ?>">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-md-6">
+                                            <!-- <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Fax</label>
                                                     <input type="text">
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
-                                        <div class="ship-wrapper">
+                                        <!-- <div class="ship-wrapper">
                                             <div class="single-ship">
                                                 <input type="radio" name="address" value="address" checked="">
                                                 <label>Ship to this address</label>
@@ -162,14 +187,16 @@ include "layouts/breadcrumb.php";
                                                 <input type="radio" name="address" value="dadress">
                                                 <label>Ship to different address</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="billing-back-btn">
-                                            <div class="billing-back">
+                                            <!-- <div class="billing-back">
                                                 <a href="#"><i class="ion-arrow-up-c"></i> back</a>
-                                            </div>
-                                            <div class="billing-btn">
-                                                <button type="submit">Get a Quote</button>
-                                            </div>
+                                            </div> -->
+                                            <form action="" method="post">
+                                                <div class="billing-btn">
+                                                    <button type="submit" name="ordering">Get a Quote</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -183,14 +210,13 @@ include "layouts/breadcrumb.php";
                                 <div class="panel-body">
                                     <div class="shipping-information-wrapper">
                                         <div class="shipping-info-2">
-                                            <span>HasTech</span>
-                                            <span>Bonosrie</span>
-                                            <span>D - Block</span>
-                                            <span>Dkaka, 1201</span>
-                                            <span>Bangladesh</span>
-                                            <span>T: +8800 879 9876 </span>
+                                            <p>Country: <?= 'Egypt' ?></p>
+                                            <p>City: <?= $myAddress[0]['city'] ?? '?' ?> </p>
+                                            <p>Region: <?= $myAddress[0]['region'] ?? '?' ?></p>
+                                            <p>Street: <?= $myAddress[0]['street'] ?? '?' ?></p>
+                                            <span><?= $_SESSION['user']->phone ?> </span>
                                         </div>
-                                        <div class="edit-address">
+                                        <!-- <div class="edit-address">
                                             <a href="#">Edit Address</a>
                                         </div>
                                         <div class="billing-select">
@@ -205,15 +231,15 @@ include "layouts/breadcrumb.php";
                                                 <input type="checkbox" checked="" value="address" name="address">
                                                 <label>Use Billing Address</label>
                                             </div>
-                                        </div>
-                                        <div class="billing-back-btn">
+                                        </div> -->
+                                        <!-- <div class="billing-back-btn">
                                             <div class="billing-back">
                                                 <a href="#"><i class="ion-arrow-up-c"></i> back</a>
                                             </div>
                                             <div class="billing-btn">
                                                 <button type="submit">Continue</button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -227,16 +253,16 @@ include "layouts/breadcrumb.php";
                                     <div class="shipping-method-wrapper">
                                         <div class="shipping-method">
                                             <p>Flat Rate</p>
-                                            <p>Fixed $40.00</p>
+                                            <p>Fixed $30.00</p>
                                         </div>
-                                        <div class="billing-back-btn">
+                                        <!-- <div class="billing-back-btn">
                                             <div class="billing-back">
                                                 <a href="#"><i class="ion-arrow-up-c"></i> back</a>
                                             </div>
                                             <div class="billing-btn">
                                                 <button type="submit">Continue</button>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -366,107 +392,55 @@ include "layouts/breadcrumb.php";
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="o-pro-dec">
-                                                                    <p>Fusce aliquam</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-price">
-                                                                    <p>$236.00</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-qty">
-                                                                    <p>2</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-subtotal">
-                                                                    <p>$236.00</p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="o-pro-dec">
-                                                                    <p>Primis in faucibus</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-price">
-                                                                    <p>$265.00</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-qty">
-                                                                    <p>3</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-subtotal">
-                                                                    <p>$265.00</p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="o-pro-dec">
-                                                                    <p>Etiam gravida</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-price">
-                                                                    <p>$363.00</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-qty">
-                                                                    <p>2</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-subtotal">
-                                                                    <p>$363.00</p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>
-                                                                <div class="o-pro-dec">
-                                                                    <p>Quisque in arcu</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-price">
-                                                                    <p>$328.00</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-qty">
-                                                                    <p>2</p>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="o-pro-subtotal">
-                                                                    <p>$328.00</p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                        <?php
+                                                        foreach ($result as $value) {
+                                                            # code...
+
+                                                        ?>
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="o-pro-dec">
+                                                                        <p><?= $value['en_name'] ?></p>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="o-pro-price">
+                                                                        <p>$<?= $value['price'] ?></p>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="o-pro-qty">
+                                                                        <p><?= $value['quantity'] ?></p>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="o-pro-subtotal">
+                                                                        <p>$<?= $value['price'] * $value['quantity']  ?></p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php
+
+                                                        } ?>
                                                     </tbody>
+                                                    <?php
+                                                    $i = 0;
+                                                    foreach ($result as $value) {
+                                                        $i = $i + $value['price'];
+                                                    }
+                                                    ?>
                                                     <tfoot>
                                                         <tr>
                                                             <td colspan="3">Subtotal </td>
-                                                            <td colspan="1">$4,001.00</td>
+                                                            <td colspan="1">$<?= $i ?></td>
                                                         </tr>
                                                         <tr class="tr-f">
                                                             <td colspan="3">Shipping & Handling (Flat Rate - Fixed</td>
-                                                            <td colspan="1">$45.00</td>
+                                                            <td colspan="1">$30.00</td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3">Grand Total</td>
-                                                            <td colspan="1">$4,722.00</td>
+                                                            <td colspan="1">$<?= $i + 30 ?></td>
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -474,12 +448,12 @@ include "layouts/breadcrumb.php";
                                             <div class="billing-back-btn">
                                                 <span>
                                                     Forgot an Item?
-                                                    <a href="#"> Edit Your Cart.</a>
+                                                    <a href="cart-page.php"> Edit Your Cart.</a>
 
                                                 </span>
-                                                <div class="billing-btn">
+                                                <!-- <div class="billing-btn">
                                                     <button type="submit">Continue</button>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>

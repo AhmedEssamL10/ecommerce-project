@@ -13,7 +13,7 @@ class Address extends Model implements Crud
     }
     public function read()
     {
-        $query = "SELECT `city` ,`users_id`,`region`,`street` FROM `addresses` JOIN users on addresses.users_id = users.id WHERE users_id = ?";
+        $query = "SELECT `city` ,`users_id`,`region`,`street` , `buliding` FROM `addresses` JOIN users on addresses.users_id = users.id WHERE users_id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_Param('i', $this->users_id);
         $stmt->execute();
