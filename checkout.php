@@ -35,6 +35,7 @@ if (isset($_SESSION['user'])) {
         <div class="row">
             <div class="col-lg-9">
                 <div class="checkout-wrapper">
+
                     <div id="faq" class="panel-group">
                         <!-- <div class="panel panel-default">
                             <div class="panel-heading">
@@ -98,7 +99,8 @@ if (isset($_SESSION['user'])) {
                         </div> -->
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>2.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-2">billing information</a></h5>
+                                <h5 class="panel-title"><span>2.</span> <a data-toggle="collapse" data-parent="#faq"
+                                        href="#payment-2">billing information</a></h5>
                             </div>
                             <div id="payment-2" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -107,13 +109,15 @@ if (isset($_SESSION['user'])) {
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>First Name</label>
-                                                    <input type="text" name="first_name" value="<?= $_SESSION['user']->first_name ?>">
+                                                    <input type="text" name="first_name"
+                                                        value="<?= $_SESSION['user']->first_name ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Last Name</label>
-                                                    <input type="text" name="last_name" value="<?= $_SESSION['user']->last_name ?>">
+                                                    <input type="text" name="last_name"
+                                                        value="<?= $_SESSION['user']->last_name ?>">
                                                 </div>
                                             </div>
                                             <!-- <div class="col-lg-6 col-md-6">
@@ -125,13 +129,15 @@ if (isset($_SESSION['user'])) {
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Email Address</label>
-                                                    <input type="email" name="email" value="<?= $_SESSION['user']->email ?>">
+                                                    <input type="email" name="email"
+                                                        value="<?= $_SESSION['user']->email ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="billing-info">
                                                     <label>Address</label>
-                                                    <input type="text" name="address" value="<?= $myAddress[0]['region'] . " - " . $myAddress[0]['street'] ?>">
+                                                    <input type="text" name="address"
+                                                        value="<?= $myAddress[0]['region'] . " - " . $myAddress[0]['street'] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
@@ -168,7 +174,8 @@ if (isset($_SESSION['user'])) {
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Telephone</label>
-                                                    <input type="text" name="phone" value="<?= $_SESSION['user']->phone ?>">
+                                                    <input type="text" name="phone"
+                                                        value="<?= $_SESSION['user']->phone ?>">
                                                 </div>
                                             </div>
                                             <!-- <div class="col-lg-6 col-md-6">
@@ -204,7 +211,9 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>3.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-3">shipping information</a></h5>
+                                <h5 class="panel-title"><span>3.</span> <a data-toggle="collapse" data-parent="#faq"
+                                        href="#payment-3">shipping
+                                        information</a></h5>
                             </div>
                             <div id="payment-3" class="panel-collapse collapse ">
                                 <div class="panel-body">
@@ -246,7 +255,9 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>4.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-4">Shipping method</a></h5>
+                                <h5 class="panel-title"><span>4.</span> <a data-toggle="collapse" data-parent="#faq"
+                                        href="#payment-4">Shipping
+                                        method</a></h5>
                             </div>
                             <div id="payment-4" class="panel-collapse collapse ">
                                 <div class="panel-body">
@@ -269,7 +280,9 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>5.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-5">payment information</a></h5>
+                                <h5 class="panel-title"><span>5.</span> <a data-toggle="collapse" data-parent="#faq"
+                                        href="#payment-5">payment
+                                        information</a></h5>
                             </div>
                             <div id="payment-5" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -375,7 +388,9 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>6.</span> <a data-toggle="collapse" data-parent="#faq" href="#payment-6">Order Review</a></h5>
+                                <h5 class="panel-title"><span>6.</span> <a data-toggle="collapse" data-parent="#faq"
+                                        href="#payment-6">Order
+                                        Review</a></h5>
                             </div>
                             <div id="payment-6" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -397,28 +412,28 @@ if (isset($_SESSION['user'])) {
                                                             # code...
 
                                                         ?>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="o-pro-dec">
-                                                                        <p><?= $value['en_name'] ?></p>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="o-pro-price">
-                                                                        <p>$<?= $value['price'] ?></p>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="o-pro-qty">
-                                                                        <p><?= $value['quantity'] ?></p>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="o-pro-subtotal">
-                                                                        <p>$<?= $value['price'] * $value['quantity']  ?></p>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="o-pro-dec">
+                                                                    <p><?= $value['en_name'] ?></p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="o-pro-price">
+                                                                    <p>$<?= $value['price'] ?></p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="o-pro-qty">
+                                                                    <p><?= $value['quantity'] ?></p>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="o-pro-subtotal">
+                                                                    <p>$<?= $value['price'] * $value['quantity']  ?></p>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                         <?php
 
                                                         } ?>

@@ -50,7 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $user->setPassword($_POST['password'])->setEmail($_SESSION['user']->email)->updatePassword();
             header("location:logout.php");
         }
+    } elseif (isset($_POST['update_address'])) {
+        $validation->setInput('city')->setValue($_POST['city'])->required();
+        $validation->setInput('region')->setValue($_POST['region'])->required();
+        $validation->setInput('buliding')->setValue($_POST['buliding'])->required();
+        $validation->setInput('floor')->setValue($_POST['floor'])->required();
+        $validation->setInput('street')->setValue($_POST['street'])->required();
+        if (empty($validation->getErrors())) {
+            $address->setCity($_POST['city'])->setStreet($_POST['street'])->setBuliding($_POST['buliding'])->setFloor($_POST['floor'])->setRegion($_POST['region'])->setUsers_id($_SESSION['user']->id)->updateAddress();
+        }
     }
+} elseif (isset($_POST['delete_address'])) {
+    $address->setUsers_id($_SESSION['user']->id)->deleteAddress();
 }
 if (isset($_SESSION['user'])) {
     $myAddress = $address->setUsers_id($_SESSION['user']->id)->read()->fetch_all(MYSQLI_ASSOC);
@@ -70,12 +81,10 @@ if (isset($_SESSION['user'])) {
                     <div id="faq" class="panel-group">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq"
-                                        href="#my-account-1">Edit your account information </a></h5>
+                                <h5 class="panel-title"><span>1</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-1">Edit your account information </a></h5>
                             </div>
 
-                            <div id="my-account-1"
-                                class="panel-collapse collapse <?= isset($_POST['upload-image']) ? 'show' : '' ?>">
+                            <div id="my-account-1" class="panel-collapse collapse <?= isset($_POST['upload-image']) ? 'show' : '' ?>">
                                 <div class="panel-body">
 
                                     <div class="billing-information-wrapper">
@@ -99,16 +108,12 @@ if (isset($_SESSION['user'])) {
                                                         }
                                                         ?>
                                                         <label for="file">
-                                                            <img src="assets/img/users/<?= $image ?>" id="image"
-                                                                class="w-100 rounded-circle" style="cursor:pointer;"
-                                                                alt="">
+                                                            <img src="assets/img/users/<?= $image ?>" id="image" class="w-100 rounded-circle" style="cursor:pointer;" alt="">
                                                         </label>
                                                         <form action="" method="post" enctype="multipart/form-data">
-                                                            <input type="file" name="image" class="d-none" id="file"
-                                                                onchange="loadFile(event)">
+                                                            <input type="file" name="image" class="d-none" id="file" onchange="loadFile(event)">
                                                             <div class="billing-btn">
-                                                                <button type="submit" class="d-none" name="upload-image"
-                                                                    id="upload-image">Upload</button>
+                                                                <button type="submit" class="d-none" name="upload-image" id="upload-image">Upload</button>
                                                             </div>
                                                         </form>
                                                         <?= isset($imageService) && $imageService->getError('size') ?>
@@ -124,15 +129,13 @@ if (isset($_SESSION['user'])) {
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>First Name</label>
-                                                    <input type="text" name="first_name"
-                                                        value="<?= $_SESSION['user']->first_name ?>">
+                                                    <input type="text" name="first_name" value="<?= $_SESSION['user']->first_name ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <div class="billing-info">
                                                     <label>Last Name</label>
-                                                    <input type="text" name="last_name"
-                                                        value="<?= $_SESSION['user']->last_name ?>">
+                                                    <input type="text" name="last_name" value="<?= $_SESSION['user']->last_name ?>">
                                                 </div>
                                             </div>
 
@@ -140,12 +143,8 @@ if (isset($_SESSION['user'])) {
                                                 <div class="billing-info">
                                                     <label for="gender">Gender</label>
                                                     <select name="gender" id="gender">
-                                                        <option
-                                                            <?= $_SESSION['user']->gender == 'm' ? 'selected' : '' ?>
-                                                            value="m">Male</option>
-                                                        <option
-                                                            <?= $_SESSION['user']->gender == 'f' ? 'selected' : '' ?>
-                                                            value="f">Female</option>
+                                                        <option <?= $_SESSION['user']->gender == 'm' ? 'selected' : '' ?> value="m">Male</option>
+                                                        <option <?= $_SESSION['user']->gender == 'f' ? 'selected' : '' ?> value="f">Female</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -169,8 +168,7 @@ if (isset($_SESSION['user'])) {
                         <div class="panel panel-default">
                             <form action="" method="post">
                                 <div class="panel-heading">
-                                    <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq"
-                                            href="#my-account-2">Change your password </a></h5>
+                                    <h5 class="panel-title"><span>2</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-2">Change your password </a></h5>
                                 </div>
                                 <div id="my-account-2" class="panel-collapse collapse">
                                     <div class="panel-body">
@@ -211,8 +209,7 @@ if (isset($_SESSION['user'])) {
 
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq"
-                                        href="#my-account-3">Modify your address book entries </a></h5>
+                                <h5 class="panel-title"><span>3</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-3">Modify your address book entries </a></h5>
                             </div>
                             <div id="my-account-3" class="panel-collapse collapse">
                                 <div class="panel-body">
@@ -222,22 +219,88 @@ if (isset($_SESSION['user'])) {
                                         </div>
                                         <div class="entries-wrapper">
                                             <div class="row">
-                                                <div
-                                                    class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                                     <div class="entries-info text-center">
                                                         <p> <?= $error ?? '' ?> </p>
                                                         <p>Country: <?= 'Egypt' ?></p>
                                                         <p>City: <?= $myAddress[0]['city'] ?? '?' ?> </p>
                                                         <p>Region: <?= $myAddress[0]['region'] ?? '?' ?></p>
                                                         <p>Street: <?= $myAddress[0]['street'] ?? '?' ?></p>
+                                                        <p>Building: <?= $myAddress[0]['buliding'] ?? '?' ?></p>
+                                                        <p>Floor: <?= $myAddress[0]['floor'] ?? '?' ?></p>
 
                                                     </div>
                                                 </div>
-                                                <div
-                                                    class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                                     <div class="entries-edit-delete text-center">
-                                                        <a class="edit" href="#">Edit</a>
-                                                        <a href="#">Delete</a>
+                                                        <!-- <a class="edit" href="#">Edit</a> -->
+
+                                                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                                            Edit
+                                                        </a>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="city" placeholder="Enter city" value="<?= $myAddress[0]['city']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('city') ?? '' ?>
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="region" placeholder="Enter region" value="<?= $myAddress[0]['region']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('region') ?? '' ?>
+
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="street" placeholder="Enter street" value="<?= $myAddress[0]['street']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('street') ?? '' ?>
+
+                                                                                </div>
+
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="buliding" placeholder="Enter buliding" value="<?= $myAddress[0]['buliding']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('buliding') ?? '' ?>
+
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="floor" placeholder="Enter floor" value="<?= $myAddress[0]['floor']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('floor') ?? '' ?>
+
+                                                                                </div>
+                                                                                <div class="billing-btn">
+                                                                                    <button type="submit" name="update_address">Continue</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Modal end -->
+                                                        <form method="post">
+                                                            <button type="button" class="btn btn-outline-danger" name="delete_address">Delete</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -267,14 +330,14 @@ if (isset($_SESSION['user'])) {
     </div>
 </div>
 <script>
-var loadFile = function(event) {
-    var output = document.getElementById('image');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-        URL.revokeObjectURL(output.src) // free memory
-        document.getElementById('upload-image').classList.remove('d-none');
-    }
-};
+    var loadFile = function(event) {
+        var output = document.getElementById('image');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+            document.getElementById('upload-image').classList.remove('d-none');
+        }
+    };
 </script>
 <!-- my account end -->
 <?php

@@ -130,28 +130,41 @@ if ($_GET) {
                                         <img alt="" src="assets/img/product/<?= $product['image'] ?>">
                                     </a>
                                     <!-- <span>-30%</span> -->
-                                    <div class="product-action">
-                                        <a class="action-wishlist" href="?add=<?= $product['id'] ?>" title="Favorate">
-                                            <i class="ion-android-favorite-outline"></i>
-                                        </a>
-                                        <a class="action-cart" href="?cart=<?= $product['id'] ?>" title="Add To Cart">
-                                            <i class="ion-ios-shuffle-strong"></i>
-                                        </a>
-                                        <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
-                                            <i class="ion-ios-search-strong"></i>
-                                        </a>
-                                    </div>
+                                    <?php
+                                    if (isset($_SESSION['user'])) {
+
+                                    ?>
+                                        <div class="product-action">
+                                            <a class="action-wishlist" href="?add=<?= $product['id'] ?>" title="Favorate">
+                                                <i class="ion-android-favorite-outline"></i>
+                                            </a>
+                                            <a class="action-cart" href="?cart=<?= $product['id'] ?>" title="Add To Cart">
+                                                <i class="ion-ios-shuffle-strong"></i>
+                                            </a>
+                                            <a class="action-compare" href="#" data-target="#exampleModal" data-toggle="modal" title="Quick View">
+                                                <i class="ion-ios-search-strong"></i>
+                                            </a>
+                                        </div>
+                                    <?php
+                                    } ?>
                                 </div>
                                 <div class="product-content text-left">
                                     <div class="product-hover-style">
                                         <div class="product-title">
                                             <h4>
-                                                <a href="product-details.php"><?= $product['en_name'] ?></a>
+                                                <a href="product-details.php?product=<?= $product['id'] ?>"><?= $product['en_name'] ?></a>
                                             </h4>
                                         </div>
-                                        <div class="cart-hover">
-                                            <h4><a href="product-details.php">+ Add to cart</a></h4>
-                                        </div>
+                                        <?php
+                                        if (isset($_SESSION['user'])) {
+
+                                        ?>
+                                            <div class="cart-hover">
+                                                <h4><a href="?cart=<?= $product['id'] ?>">+ Add to cart</a>
+                                                </h4>
+                                            </div>
+                                        <?php
+                                        } ?>
                                     </div>
                                     <div class="product-price-wrapper">
                                         <span> $ <?= $product['price'] ?></span>

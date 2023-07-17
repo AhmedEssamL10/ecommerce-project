@@ -7,13 +7,13 @@ use App\Database\Models\Contract\Model;
 
 class Address extends Model implements Crud
 {
-    private $id, $users_id, $city, $region, $street, $created_at, $updated_at, $buliding, $floor, $flat, $notes;
+    private $id, $users_id, $city, $region, $street, $created_at, $updated_at, $buliding, $floor;
     public function create()
     {
     }
     public function read()
     {
-        $query = "SELECT `city` ,`users_id`,`region`,`street` , `buliding` FROM `addresses` JOIN users on addresses.users_id = users.id WHERE users_id = ?";
+        $query = "SELECT `city` ,`users_id`,`region`,`street` , `buliding` ,`floor` FROM `addresses` JOIN users on addresses.users_id = users.id WHERE users_id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_Param('i', $this->users_id);
         $stmt->execute();
@@ -205,44 +205,18 @@ class Address extends Model implements Crud
 
         return $this;
     }
-
-    /**
-     * Get the value of flat
-     */
-    public function getFlat()
+    public function updateAddress()
     {
-        return $this->flat;
+        $query = "UPDATE `addresses` SET `city`=? ,`region`=? ,`street`=? ,`buliding`=? ,`floor`=? WHERE `users_id` = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_Param('sssiii', $this->city, $this->region, $this->street, $this->buliding, $this->floor, $this->users_id);
+        return  $stmt->execute();
     }
-
-    /**
-     * Set the value of flat
-     *
-     * @return  self
-     */
-    public function setFlat($flat)
+    public function deleteAddress()
     {
-        $this->flat = $flat;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of notes
-     */
-    public function getNotes()
-    {
-        return $this->notes;
-    }
-
-    /**
-     * Set the value of notes
-     *
-     * @return  self
-     */
-    public function setNotes($notes)
-    {
-        $this->notes = $notes;
-
-        return $this;
+        $query = "   DELETE FROM `addresses` WHERE `users_id` = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_Param('i', $this->users_id);
+        return  $stmt->execute();
     }
 }
