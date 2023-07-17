@@ -4,6 +4,7 @@ include "layouts/header.php";
 include "layouts/navbar.php";
 include "layouts/breadcrumb.php";
 
+use App\Database\Http\Requests\validation;
 use App\Database\Models\Address;
 use App\Database\Models\Cart;
 use App\Database\Models\Orders_products;
@@ -11,6 +12,19 @@ use App\Database\Models\Orders_products;
 $carts = new Cart;
 $order = new Orders_products;
 $address = new Address;
+$validation = new validation;
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (isset($_POST['update_address'])) {
+        $validation->setInput('city')->setValue($_POST['city'])->required();
+        $validation->setInput('region')->setValue($_POST['region'])->required();
+        $validation->setInput('buliding')->setValue($_POST['buliding'])->required();
+        $validation->setInput('floor')->setValue($_POST['floor'])->required();
+        $validation->setInput('street')->setValue($_POST['street'])->required();
+        if (empty($validation->getErrors())) {
+            $address->setCity($_POST['city'])->setStreet($_POST['street'])->setBuliding($_POST['buliding'])->setFloor($_POST['floor'])->setRegion($_POST['region'])->setUsers_id($_SESSION['user']->id)->updateAddress();
+        }
+    }
+}
 if (isset($_SESSION['user'])) {
     $result = $carts->setUsers_id($_SESSION['user']->id)->cartList()->fetch_all(MYSQLI_ASSOC);
     $myAddress = $address->setUsers_id($_SESSION['user']->id)->read()->fetch_all(MYSQLI_ASSOC);
@@ -137,7 +151,7 @@ if (isset($_SESSION['user'])) {
                                                 <div class="billing-info">
                                                     <label>Address</label>
                                                     <input type="text" name="address"
-                                                        value="<?= $myAddress[0]['region'] . " - " . $myAddress[0]['street'] ?>">
+                                                        value="<?= $myAddress[0]['region'] . " - " . $myAddress[0]['street'] . " - " . "Buliding no " . $myAddress[0]['buliding'] . " - " . "Floor no " . $myAddress[0]['floor'] ?>">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
@@ -199,11 +213,96 @@ if (isset($_SESSION['user'])) {
                                             <!-- <div class="billing-back">
                                                 <a href="#"><i class="ion-arrow-up-c"></i> back</a>
                                             </div> -->
+
                                             <form action="" method="post">
                                                 <div class="billing-btn">
                                                     <button type="submit" name="ordering">Get a Quote</button>
                                                 </div>
+                                                <div
+                                                    class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                    <div class="entries-edit-delete text-center">
+                                                        <a class="action-compare" href="#" data-target="#exampleModal"
+                                                            data-toggle="modal" title="Quick View">
+                                                            Edit
+                                                        </a>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                            role="dialog">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form method="post">
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="city"
+                                                                                            placeholder="Enter city"
+                                                                                            value="<?= $myAddress[0]['city']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('city') ?? '' ?>
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="region"
+                                                                                            placeholder="Enter region"
+                                                                                            value="<?= $myAddress[0]['region']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('region') ?? '' ?>
+
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="street"
+                                                                                            placeholder="Enter street"
+                                                                                            value="<?= $myAddress[0]['street']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('street') ?? '' ?>
+
+                                                                                </div>
+
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text"
+                                                                                            name="buliding"
+                                                                                            placeholder="Enter buliding"
+                                                                                            value="<?= $myAddress[0]['buliding']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('buliding') ?? '' ?>
+
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6">
+                                                                                    <div class="billing-info">
+
+                                                                                        <input type="text" name="floor"
+                                                                                            placeholder="Enter floor"
+                                                                                            value="<?= $myAddress[0]['floor']  ?> ">
+                                                                                    </div>
+                                                                                    <?= $validation->getError('floor') ?? '' ?>
+
+                                                                                </div>
+                                                                                <div class="billing-btn">
+                                                                                    <button type="submit"
+                                                                                        name="update_address">Continue</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal end -->
+
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -441,7 +540,7 @@ if (isset($_SESSION['user'])) {
                                                     <?php
                                                     $i = 0;
                                                     foreach ($result as $value) {
-                                                        $i = $i + $value['price'];
+                                                        $i = $i + $value['price'] * $value['quantity'];
                                                     }
                                                     ?>
                                                     <tfoot>
