@@ -56,31 +56,34 @@ if ($_POST) {
                                     # code...
 
                                 ?>
-                                    <tr>
-                                        <!-- <td class="product-thumbnail">
+                                <tr>
+                                    <!-- <td class="product-thumbnail">
                                         <a href="#"><img src="assets/img/value/value-3.jpg" alt=""></a>
                                     </td> -->
-                                        <td class="product-name"><a href="#"><?= $value['en_name'] ?></a></td>
-                                        <td class="product-price-value"><span class="amount">$<?= $value['price'] ?></span>
-                                        </td>
-                                        <td class="product-quantity">
+                                    <td class="product-name"><a href="#"><?= $value['en_name'] ?></a></td>
+                                    <td class="product-price-value"><span class="amount">$<?= $value['price'] ?></span>
+                                    </td>
+                                    <td class="product-quantity">
 
-                                            <div class="pro-dec-value">
-                                                <!-- <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton[]"> -->
-                                                <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton[<?= $value['products_id'] ?>]">
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">$<?= $value['price'] * $value['quantity']  ?></td>
-                                        <!-- <td class="product-remove"> -->
+                                        <div class="pro-dec-value">
+                                            <!-- <input class="value-plus-minus-box" type="text" value="<?= $value['quantity'] ?>" name="qtybutton[]"> -->
+                                            <input class="value-plus-minus-box" type="text"
+                                                value="<?= $value['quantity'] ?>"
+                                                name="qtybutton[<?= $value['products_id'] ?>]">
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal">$<?= $value['price'] * $value['quantity']  ?></td>
+                                    <!-- <td class="product-remove"> -->
+                                    <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
+                                    <td class="product-remove">
                                         <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                        <td class="product-remove">
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
 
-                                            <a href="?delete=<?= $value['products_id'] ?>" class="delete-link"><i class="fa fa-times"></i></a>
+                                        <a href="?delete=<?= $value['products_id'] ?>" class="delete-link"><i
+                                                class="fa fa-times"></i></a>
 
-                                        </td>
-                                        </td>
-                                    </tr>
+                                    </td>
+                                    </td>
+                                </tr>
                                 <?php
                                 } ?>
                             </tbody>
@@ -166,7 +169,7 @@ if ($_POST) {
                             <?php
                             $i = 0;
                             foreach ($result as $value) {
-                                $i = $i + $value['price'];
+                                $i = $i + $value['price']*$value['quantity'];
                             }
                             ?>
                             <h5>Total products <span>$<?= $i ?></span></h5>
