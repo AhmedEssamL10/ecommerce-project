@@ -35,9 +35,9 @@ if ($_GET) {
     if (isset($_GET['add'])) {
         $favorate->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['add'])->addFavItem();
         $result = $products->getProductByName("id", $_GET['add']);
-        $reviewResult = $review->setProduct_id($_GET['add'])->read()->fetch_all(MYSQLI_ASSOC);
-        $numOfRates = $review->setProduct_id($_GET['add'])->Rates()->fetch_all(MYSQLI_ASSOC);
-        $nameRates = $review->setProduct_id($_GET['add'])->getNameRate()->fetch_all(MYSQLI_ASSOC);
+        // $reviewResult = $review->setProduct_id($_GET['add'])->read()->fetch_all(MYSQLI_ASSOC);
+        // $numOfRates = $review->setProduct_id($_GET['add'])->Rates()->fetch_all(MYSQLI_ASSOC);
+        // $nameRates = $review->setProduct_id($_GET['add'])->getNameRate()->fetch_all(MYSQLI_ASSOC);
         if ($result->num_rows > 0) {
             $result->fetch_all(MYSQLI_ASSOC);
         }
@@ -45,9 +45,9 @@ if ($_GET) {
     if (isset($_GET['cart'])) {
         $carts->setUsers_id($_SESSION['user']->id)->setProducts_id($_GET['cart'])->setQuantity(1)->addCartItem();
         $result = $products->getProductByName("id", $_GET['cart']);
-        $reviewResult = $review->setProduct_id($_GET['cart'])->read()->fetch_all(MYSQLI_ASSOC);
-        $numOfRates = $review->setProduct_id($_GET['cart'])->Rates()->fetch_all(MYSQLI_ASSOC);
-        $nameRates = $review->setProduct_id($_GET['cart'])->getNameRate()->fetch_all(MYSQLI_ASSOC);
+        // $reviewResult = $review->setProduct_id($_GET['cart'])->read()->fetch_all(MYSQLI_ASSOC);
+        // $numOfRates = $review->setProduct_id($_GET['cart'])->Rates()->fetch_all(MYSQLI_ASSOC);
+        // $nameRates = $review->setProduct_id($_GET['cart'])->getNameRate()->fetch_all(MYSQLI_ASSOC);
         if ($result->num_rows > 0) {
             $result->fetch_all(MYSQLI_ASSOC);
         }
@@ -57,6 +57,10 @@ if ($_GET) {
 } else {
     $title = "404 Not Found";
     include "layouts/errors/404.php";
+}
+if (isset($_POST['message'])) {
+    $insert_rate = $review->setProduct_id($_GET['product'])->setUser_id($_SESSION['user']->id)->setComment($_POST['message'])->setRate(3)->insertReview();
+    header("location:product-details.php?product= " . $_GET['product']);
 }
 
 
@@ -145,19 +149,24 @@ if ($_GET) {
                             <label>Qty:</label>
                             <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
                         </div> -->
-                            <div class="shop-list-cart-wishlist">
-                                <a title="Add To Cart" href="?cart=<?= $value['id'] ?>">
-                                    <i class="icon-handbag"></i>
-                                    cart
-                                </a>
-                                <a title="Favorate" href="?add=<?= $value['id'] ?>">
-                                    <i class="icon-heart"></i>
-                                    fav
-                                </a>
-                            </div>
+                            <?php
+                            if (isset($_SESSION['user'])) {
+                            ?>
+
+                                <div class="shop-list-cart-wishlist">
+                                    <a title="Add To Cart" href="?cart=<?= $value['id'] ?>">
+                                        <i class="icon-handbag"></i>
+                                        cart
+                                    </a>
+                                    <a title="Favorate" href="?add=<?= $value['id'] ?>">
+                                        <i class="icon-heart"></i>
+                                        fav
+                                    </a>
+                                </div>
 
 
-
+                            <?php
+                            } ?>
                         </div>
 
                     </div>
@@ -244,48 +253,40 @@ if ($_GET) {
                             }
                             ?>
                         </div>
-                        <div class="ratting-form-wrapper">
-                            <h3>Add your Comments :</h3>
-                            <div class="ratting-form">
-                                <form action="#">
-                                    <div class="star-box">
-                                        <h2>Rating:</h2>
-                                        <div class="ratting-star">
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star theme-color"></i>
-                                            <i class="ion-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="rating-form-style mb-20">
-                                                <input placeholder="Name" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="rating-form-style mb-20">
-                                                <input placeholder="Email" type="text">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="rating-form-style form-submit">
-                                                <textarea name="message" placeholder="Message"></textarea>
-                                                <input type="submit" value="add review">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                <?php
+                    <?php
                     $i++;
                 } ?>
+                    <div class="ratting-form-wrapper">
+                        <h3>Add your Comments :</h3>
+                        <div class="ratting-form">
+                            <form method="post">
+                                <!-- <div class="star-box">
+                                    <h2>Rating:</h2>
+                                    <div class="ratting-star">
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star theme-color"></i>
+                                        <i class="ion-star"></i>
+                                    </div>
+                                </div> -->
+                                <div class="row">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="rating-form-style form-submit">
+                                        <textarea name="message" placeholder="Message"></textarea>
+                                        <input type="submit" value="add review">
+                                    </div>
+                                </div>
+                        </div>
+                        </form>
+                    </div>
+                    </div>
             </div>
+
         </div>
     </div>
+</div>
 </div>
 
 <!-- Footer style End -->

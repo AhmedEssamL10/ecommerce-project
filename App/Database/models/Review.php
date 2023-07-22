@@ -162,4 +162,12 @@ class Review extends Model implements Crud
         $stmt->execute();
         return $stmt->get_result();
     }
+    public function insertReview()
+    {
+        $query = "INSERT INTO `reviews`(`user_id`, `product_id`,  `rate`, `comment`) VALUES (?,?,?,?) ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_Param('iiis', $this->user_id, $this->product_id, $this->rate, $this->comment);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
 }
