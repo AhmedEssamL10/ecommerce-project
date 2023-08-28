@@ -44,18 +44,18 @@ if (isset($_SESSION['user'])) {
                                         <ul class="mega-menu">
                                             <?php
                                             foreach ($result as $value) {
-
-
                                             ?>
                                             <li>
                                                 <ul>
                                                     <li class="font-weight-bold">
-                                                        <?= ucwords($value['en_name'])  ?></li>
+                                                        <?= ucwords($value['en_name']) ?>
+                                                    </li>
 
                                                     <?php
                                                         foreach ($subresult as $subvalue) {
                                                             if ($subvalue['catigories_id'] == $value['id']) {
                                                         ?>
+
                                                     <li><a
                                                             href="shop.php?subcategory=<?= $subvalue['id'] ?>"><?= $subvalue['en_name'] ?></a>
                                                     </li>
@@ -113,7 +113,7 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <?php } ?>
                         <?php
-                            if (isset($_SESSION['user'])) { ?>
+                        if (isset($_SESSION['user'])) { ?>
                         <div class="header-cart">
                             <a href="#">
                                 <div class="cart-icon">
@@ -159,7 +159,7 @@ if (isset($_SESSION['user'])) {
 
                         </div>
                         <?php
-                            } ?>
+                        } ?>
                     </div>
                 </div>
             </div>
